@@ -112,15 +112,41 @@
     <nav class="bottom-nav">
         <div onclick="location.reload()" style="font-size:24px;">🏠</div>
         <div id="open-withdraw-btn" style="font-size:24px;">🏧</div>
-        <div id="logout-btn" style="font-size:24px;">🚪</div>
-    </nav>
-
+        <div id="logout-btn" style="font-size:24p
+            
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com";
-        import { getDatabase, ref, onValue, set, runTransaction, push } from "https://www.gstatic.com";
+    // 1. IMPORTATION DES COMPOSANTS FIREBASE (CHEMINS COMPLETS .JS)
+    import { initializeApp } from "https://www.gstatic.com";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com";
+    import { getDatabase, ref, get, set, update } from "https://www.gstatic.com";
 
-        const firebaseConfig = {
+    // 2. TA CONFIGURATION SIAPI (À COMPLÉTER AVEC TES CODES CONSOLE)
+    const firebaseConfig = {
+        apiKey: "TON_API_KEY_ICI",
+        authDomain: "siapi-74d6d.firebaseapp.com",
+        databaseURL: "https://siapi-74d6d-default-rtdb.firebaseio.com",
+        projectId: "siapi-74d6d",
+        storageBucket: "siapi-74d6d.appspot.com",
+        messagingSenderId: "TON_SENDER_ID_ICI",
+        appId: "TON_APP_ID_ICI"
+    };
+
+    // 3. INITIALISATION
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const database = getDatabase(app);
+
+    // 4. EXPOSITION GLOBALE (POUR TES BOUTONS HTML)
+    window.auth = auth;
+    window.database = database;
+    window.GoogleAuthProvider = GoogleAuthProvider;
+    window.signInWithPopup = signInWithPopup;
+    window.dbRef = ref; // Pour manipuler la base de données facilement
+
+    console.log("🚀 SIAPI Firebase est prêt sur abdoulkdoidoi-byte.github.io !");
+</script>
+    
+            const firebaseConfig = {
             apiKey: "AIzaSyCop4EVQ0Nfpwq0aRtgbQemxMVD626vP00",
             authDomain: "siapi-74d6d.firebaseapp.com",
             projectId: "siapi-74d6d",
