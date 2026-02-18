@@ -113,22 +113,43 @@
         <div onclick="location.reload()" style="font-size:24px;">🏠</div>
         <div id="open-withdraw-btn" style="font-size:24px;">🏧</div>
         <div id="logout-btn" style="font-size:24p
-            
-    <script type="module">
-    // 1. IMPORTATION DES COMPOSANTS FIREBASE (CHEMINS COMPLETS .JS)
-    import { initializeApp } from "https://www.gstatic.com";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com";
-    import { getDatabase, ref, get, set, update } from "https://www.gstatic.com";
 
-    // 2. TA CONFIGURATION SIAPI (À COMPLÉTER AVEC TES CODES CONSOLE)
-    const firebaseConfig = {
-        apiKey: "TON_API_KEY_ICI",
-        authDomain: "siapi-74d6d.firebaseapp.com",
-        databaseURL: "https://siapi-74d6d-default-rtdb.firebaseio.com",
-        projectId: "siapi-74d6d",
-        storageBucket: "siapi-74d6d.appspot.com",
-        messagingSenderId: "TON_SENDER_ID_ICI",
-        appId: "TON_APP_ID_ICI"
+            <!-- CONFIGURATION SIAPI TERMINÉE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com";
+  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com";
+  import { getDatabase, ref, get, set, update } from "https://www.gstatic.com";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCop4EVQ0Nfpwq0aRtgbQemxMVD626vP00",
+    authDomain: "siapi-74d6d.firebaseapp.com",
+    databaseURL: "https://siapi-74d6d-default-rtdb.firebaseio.com",
+    projectId: "siapi-74d6d",
+    storageBucket: "siapi-74d6d.firebasestorage.app",
+    messagingSenderId: "1049903654521",
+    appId: "1:1049903654521:web:a267a58ba793e8d09916a8",
+    measurementId: "G-CYB6ST6FZ2"
+  };
+
+  // Initialisation
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const database = getDatabase(app);
+  const provider = new GoogleAuthProvider();
+
+  // Mise à disposition pour tes boutons HTML
+  window.auth = auth;
+  window.database = database;
+  window.provider = provider;
+  window.signInWithPopup = signInWithPopup;
+  window.dbRef = ref;
+  window.dbSet = set;
+  window.dbGet = get;
+
+  console.log("🚀 SIAPI configuré pour abdoulkdoidoi-byte.github.io !");
+</script>
+            
+
     };
 
     // 3. INITIALISATION
