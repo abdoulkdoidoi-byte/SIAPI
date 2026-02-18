@@ -5,249 +5,218 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SIAPI PLATINUM | 💎 HUB ÉDUCATIF</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#050505">
-
+    <script src="https://alwingulla.com" data-zone="8884441" async></script>
     <style>
-        :root { --primary: #00ff88; --dark: #050505; --gold: #ffd700; --violet: #8a2be2; --glass: rgba(255,255,255,0.08); }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--dark); color: white; margin: 0; user-select: none; overflow-x: hidden; padding-bottom: 110px; }
-        #toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--primary), #00bd65); color: #000; padding: 12px 25px; border-radius: 50px; font-weight: 900; z-index: 100000; transition: 0.5s; width: 80%; text-align: center; font-size: 13px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        :root { --primary: #00ff88; --dark: #050505; --gold: #ffd700; --violet: #8a2be2; --glass: rgba(255,255,255,0.05); }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--dark); color: white; margin: 0; user-select: none; overflow-x: hidden; padding-bottom: 90px; }
+        #toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--primary), #00bd65); color: #000; padding: 12px 25px; border-radius: 50px; font-weight: 900; z-index: 100000; transition: 0.5s; width: 85%; text-align: center; }
         #toast.show { top: 30px; }
         .screen { position:fixed; top:0; left:0; width:100%; height:100%; background:var(--dark); z-index:40000; display:none; flex-direction:column; overflow-y: auto; align-items: center; padding-top: 20px; }
         .active { display: flex !important; }
-        .header { padding: 20px; background: #000; border-bottom: 2px solid var(--violet); width: 100%; text-align: center; box-sizing: border-box; }
-        .wallet { font-size: 30px; font-weight: 900; color: var(--primary); }
-        .btn-main { background: linear-gradient(135deg, var(--violet), #4b0082); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: bold; width: 90%; margin: 10px 0; cursor: pointer; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1); }
-        .scroll-x { display: flex; overflow-x: auto; gap: 12px; padding: 15px; width: 100%; box-sizing: border-box; scrollbar-width: none; }
-        .media-card { min-width: 135px; background: #111; border-radius: 15px; border: 1px solid var(--glass); text-align: center; padding-bottom: 10px; cursor:pointer; }
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; height: 70px; background: rgba(0,0,0,0.95); display: flex; justify-content: space-around; align-items: center; border-top: 1px solid var(--glass); z-index: 35000; }
-        input { width: 85%; padding: 15px; margin: 8px 0; background: var(--glass); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; text-align: center; font-size: 14px; }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); } }
-        @keyframes slideText { 0% { transform: translateX(100%); } 100% { transform: translateX(-200%); } }
+        .header { padding: 20px; background: #000; border-bottom: 2px solid var(--violet); width: 100%; text-align: center; }
+        .wallet { font-size: 32px; font-weight: 900; color: var(--primary); }
+        .btn-main { background: linear-gradient(135deg, var(--violet), #4b0082); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: bold; width: 90%; margin: 10px 0; cursor: pointer; transition: 0.3s; }
+        .scroll-x { display: flex; overflow-x: auto; gap: 12px; padding: 15px; width: 100%; box-sizing: border-box; }
+        .media-card { min-width: 140px; background: #111; border-radius: 15px; overflow: hidden; border: 1px solid var(--glass); text-align: center; padding-bottom: 8px; }
     </style>
 </head>
 <body>
-
     <div id="toast"><span id="toast-msg">Connexion...</span></div>
 
-    <!-- ECRAN AUTH -->
+    <!-- ÉCRAN DE LOGIN -->
     <div id="auth-screen" class="screen active" style="justify-content: center;">
-        <div id="logo-admin-trigger" style="border: 3px solid var(--primary); border-radius: 50%; width: 90px; height: 90px; display:flex; align-items:center; justify-content:center; cursor:pointer;">
-            <span style="font-weight: 900; color: var(--primary); font-size: 20px;">SIAPI</span>
+        <div onclick="secretClick()" style="border: 3px solid var(--primary); border-radius: 50%; width: 80px; height: 80px; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+            <span style="font-weight: 900; color: var(--primary);">SIAPI</span>
         </div>
-        <h2 style="margin: 25px 0; font-size: 18px; color: #fff;">ACCÈS PLATINUM 💎</h2>
-        <button id="google-login-btn" class="btn-main" style="background: white; color: black; display: flex; align-items: center; justify-content: center; gap: 12px; border-radius: 50px; width: 85%;">
-            <img src="https://www.gstatic.com" width="20"> 
-            <span style="font-weight: 900;">CONTINUER AVEC GOOGLE</span>
-        </button>
+        <h2 style="text-align:center;">BIENVENUE ! 💎<br><small style="color:var(--gold); font-size:10px;">Apprenez & Encaissez</small></h2>
+        <button class="btn-main" onclick="handleAuth()">ACCÉDER AU HUB PLATINUM</button>
     </div>
 
-    <!-- HUB PRINCIPAL -->
+    <!-- LE HUB -->
     <div id="main-hub" style="display:none;">
         <header class="header">
-            <div class="wallet" id="user-balance">0.00 $</div>
-            <div id="user-balance-fcf" style="font-size: 14px; color: var(--gold); font-weight: bold;">0 FCFA</div>
+            <div class="wallet" id="user-balance-fcf">0 FCFA</div>
+            <div id="user-balance" style="font-size: 14px; color: var(--gold);">0.00 $</div>
         </header>
 
-        <div style="margin: 15px; padding: 20px; background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(138,43,226,0.1)); border-radius: 15px; border: 1px solid var(--primary); text-align: center;">
-            <h3 style="margin: 0; color: var(--primary); font-size: 15px;">💰 GAGNEZ DE L'ARGENT RÉEL</h3>
-            <p style="font-size: 11px; color: #ccc;">Films (+10F) | Quiz (+5F) | Parrainage (+25F)</p>
+        <!-- BIENVENUE -->
+        <div style="background: var(--glass); margin: 15px; padding: 15px; border-radius: 10px; border-left: 4px solid var(--primary);">
+            <h3 id="welcome-name" style="margin:0; font-size:16px;">Chargement...</h3>
         </div>
 
-        <div style="margin: 0 15px; padding: 10px; background: rgba(0,255,136,0.05); border-radius: 10px; border: 1px dashed rgba(0,255,136,0.3); overflow: hidden;">
-            <div id="ticker-content" style="font-size: 10px; color: var(--primary); white-space: nowrap; animation: slideText 12s linear infinite;">Chargement des paiements récents...</div>
-        </div>
-
-        <!-- QUIZ -->
-        <div id="quiz-section" style="background: var(--glass); margin: 15px; padding: 15px; border-radius: 15px; border: 2px solid var(--gold); text-align:center;">
-            <div id="quiz-init">
-                <button id="unlock-quiz-btn" class="btn-main" style="background:var(--gold); color:black; margin:0; width:100%;">VOIR LA PUB & JOUER (+5F) 📺</button>
+        <!-- VPN 4H / 20 PUBS -->
+        <div style="background: rgba(0,255,136,0.05); margin: 15px; padding: 15px; border-radius: 15px; border: 1px solid var(--primary); text-align: center;">
+            <div style="font-size:9px; color:var(--primary); font-weight:bold;">VPN SIAPI (4H / 20 PUBS)</div>
+            <div id="vpn-timer-display" style="font-size: 28px; font-weight: 900; color: var(--gold);">00:00:00</div>
+            <div style="font-size:10px; margin-top:10px;">Progression : <span id="pub-count">0</span>/20 Pubs</div>
+            <div style="width:80%; height:8px; background:#222; margin:5px auto; border-radius:10px; overflow:hidden;">
+                <div id="pub-bar" style="width:0%; height:100%; background:var(--primary); transition:0.3s;"></div>
             </div>
-            <div id="quiz-play" style="display:none;">
-                <p id="q-text" style="font-weight:bold; font-size:13px; margin-bottom:15px;"></p>
-                <div id="q-options" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
-            </div>
+            <button onclick="regarderPubVPN()" class="btn-main" style="background: var(--primary); color: black; padding: 8px; font-size:12px; margin-top:10px;">RECHARGER VPN (+12 MIN) 📺</button>
         </div>
 
-        <!-- IA TUTEUR -->
-        <div style="background: var(--glass); margin: 15px; padding: 15px; border-radius: 15px; border: 1px solid var(--violet);">
-            <div id="ai-chat" style="font-size: 11px; color: #ddd; margin-bottom: 10px; background:rgba(0,0,0,0.2); padding:8px; border-radius:5px;">Posez votre question scolaire...</div>
-            <div style="display:flex; gap:5px;">
-                <input type="text" id="ai-q" placeholder="Ex: Loi d'Ohm ?" style="width:100%; margin:0; padding:12px; text-align:left;">
-                <button id="ai-ask-btn" style="background:var(--violet); border:none; padding:0 15px; border-radius:10px; color:white; font-weight:bold;">ASK</button>
-            </div>
+        <!-- COURS -->
+        <div style="padding-left: 15px; font-weight: bold; color: var(--primary); font-size: 13px; margin-top: 15px;">🎓 COURS (+10 FCFA)</div>
+        <div class="scroll-x">
+            <div class="media-card" onclick="playMedia('https://www.youtube.com', 'Maths')"><div style="height:80px; font-size:40px; padding-top:10px;">📐</div><small>MATHS</small></div>
+            <div class="media-card" onclick="playMedia('https://www.youtube.com', 'Philo')"><div style="height:80px; font-size:40px; padding-top:10px;">🤔</div><small>PHILO</small></div>
         </div>
 
-        <div style="padding: 20px 0 0 15px; font-weight: bold; color: var(--primary); font-size: 13px;">📡 FILMS & TV DIRECT (+10F)</div>
-        <div id="live-scroll" class="scroll-x"></div>
+        <!-- RETRAIT -->
+        <button onclick="demanderRetrait()" class="btn-main" style="background: var(--gold); color: black; margin: 20px auto; display:block;">RETIRER MES GAINS 📲</button>
 
-        <div style="background: var(--glass); margin: 15px; padding: 15px; border-radius: 15px; text-align: center; border: 1px dashed gray;">
-            <input type="text" id="ref-link" readonly style="font-size: 10px; border:none; background:transparent; color:gray; width: 100%; margin-bottom:10px;">
-            <button id="share-btn" class="btn-main" style="background: linear-gradient(135deg, #007aff, #00c6ff); border-radius: 50px; margin:0; width:100%;">INVITER (+25F) 📲</button>
+        <!-- ADMIN (SECRET 5 CLICS) -->
+        <div id="admin-section" style="display:none; margin: 15px; padding: 15px; background: rgba(255,0,0,0.1); border: 2px dashed red; border-radius: 15px;">
+            <h3 style="color:red; font-size:14px; margin:0;">🛠️ LOGICIEL MAÎTRE</h3>
+            <div id="admin-stats" style="font-size:10px;">Total dû : 0 FCFA</div>
+            <div id="users-list" style="max-height:150px; overflow-y:auto; font-size:10px; margin-top:10px;"></div>
         </div>
     </div>
 
-    <!-- PLAYER -->
+    <!-- PLAYER VIDÉO -->
     <div id="player-screen" class="screen" style="background:#000;">
-        <div class="header" style="background:rgba(0,0,0,0.8);"><span>LECTURE</span> <button id="close-player-btn" style="float:right; color:red; border:none; background:none; font-size:25px;">✕</button></div>
-        <iframe id="main-player" width="100%" height="250" src="" frameborder="0" allowfullscreen style="margin-top:40px;"></iframe>
-        <div id="reward-msg" style="color:var(--primary); font-size:12px; margin-top:25px; display:none; animation: pulse 1s infinite;">Gain en cours (15s)... 🎬</div>
+        <div class="header"><span id="player-title">COURS</span> <button onclick="closePlayer()" style="float:right; color:red; border:none; background:none; font-size:25px;">✕</button></div>
+        <iframe id="main-player" width="100%" height="250" src="" frameborder="0" allowfullscreen></iframe>
+        <div id="reward-timer" style="color:var(--primary); text-align:center; margin-top:20px; font-weight:bold;">Gain dans 60s... ⏳</div>
     </div>
 
-    <!-- WITHDRAW -->
-    <div id="withdraw-screen" class="screen">
-        <div class="header">RETRAIT <button id="close-withdraw-btn" style="float:right; border:none; background:none; color:white; font-size:20px;">✕</button></div>
-        <div style="width:100%; text-align:center; margin-top:40px;">
-            <input type="text" id="w-method" placeholder="Orange ou MTN Money">
-            <input type="text" id="w-number" placeholder="Numéro">
-            <button id="withdraw-submit-btn" class="btn-main">VALIDER LE RETRAIT</button>
-        </div>
-    </div>
+    <!-- SCRIPTS CORE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com";
+        import { getDatabase, ref, get, set, onValue } from "https://www.gstatic.com";
 
-    <!-- SOLDE FLOTTANT -->
-    <div onclick="window.scrollTo({top:0, behavior:'smooth'})" style="position: fixed; right: 15px; bottom: 85px; background: #000; border: 2px solid var(--primary); padding: 12px 18px; border-radius: 35px; z-index: 30000; box-shadow: 0 5px 15px rgba(0,0,0,0.8);">
-        <div style="width: 8px; height: 8px; background: var(--primary); border-radius: 50%; animation: pulse 1.5s infinite; display:inline-block; margin-right:5px;"></div>
-        <span id="float-bal" style="font-weight: 900; font-size: 13px; color: var(--primary);">0 F</span>
-    </div>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDR1p_i0-JxS7dTUe2KBRd8rcM8JfcBuRw",
+            authDomain: "siapi-74d6d.firebaseapp.com",
+            databaseURL: "https://siapi-74d6d-default-rtdb.firebaseio.com",
+            projectId: "siapi-74d6d",
+            storageBucket: "siapi-74d6d.firebasestorage.app",
+            messagingSenderId: "1049903654521",
+            appId: "1:1049903654521:web:a267a58ba793e8d09916a8"
+        };
 
-    <nav class="bottom-nav">
-        <div onclick="location.reload()" style="font-size:24px;">🏠</div>
-        <div id="open-withdraw-btn" style="font-size:24px;">🏧</div>
-        <div id="logout-btn" style="font-size:24p
+        const app = initializeApp(firebaseConfig);
+        window.auth = getAuth(app);
+        window.database = getDatabase(app);
+        const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({ 'client_id': '884047974568-67r30eu667c84f6hiigbjr52ue2mnot1.apps.googleusercontent.com' });
+        window.googleProvider = provider;
 
-            <!-- SCRIPT 1 : CONFIGURATION & MOTEUR (MODULE) -->
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com";
-    import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com";
-    import { getDatabase, ref, get, set, onValue } from "https://www.gstatic.com";
+        window.dbRef = ref; window.dbGet = get; window.dbSet = set; window.dbOnValue = onValue;
+        window.signInWithPopup = signInWithPopup;
+    </script>
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyCop4EVQ0Nfpwq0aRtgbQemxMVD626vP00",
-        authDomain: "siapi-74d6d.firebaseapp.com",
-        databaseURL: "https://siapi-74d6d-default-rtdb.firebaseio.com",
-        projectId: "siapi-74d6d",
-        storageBucket: "siapi-74d6d.firebasestorage.app",
-        messagingSenderId: "1049903654521",
-        appId: "1:1049903654521:web:a267a58ba793e8d09916a8"
-    };
+    <script>
+        let vpnTime = 0, pubsToday = 0, clickCount = 0, lastClick = 0, watchTimer = null, secondsWatched = 0;
 
-    const app = initializeApp(firebaseConfig);
-    
-    // Exportation propre vers le Window pour les autres scripts
-    window.auth = getAuth(app);
-    window.database = getDatabase(app);
-    window.googleProvider = new GoogleAuthProvider();
-    
-    // Fonctions Database exportées
-    window.dbRef = ref;
-    window.dbGet = get;
-    window.dbSet = set;
-    window.dbOnValue = onValue;
-    window.signInWithPopup = signInWithPopup;
+        async function handleAuth() {
+            try {
+                const res = await window.signInWithPopup(window.auth, window.googleProvider);
+                const user = res.user;
+                document.getElementById('auth-screen').style.display = 'none';
+                document.getElementById('main-hub').style.display = 'block';
+                document.getElementById('welcome-name').innerText = "Salut " + user.displayName + " ! 💎";
 
-    console.log("✅ Moteur SIAPI corrigé et prêt !");
-</script>
+                const userRef = window.dbRef(window.database, 'users/' + user.uid);
+                const snap = await window.dbGet(userRef);
+                if (!snap.exists()) await window.dbSet(userRef, { nom: user.displayName, email: user.email, solde: 0, vpn: {time:0, pubs:0} });
 
-<!-- SCRIPT 2 : LOGIQUE APPLICATIVE (FONCTIONS) -->
-<script>
-let watchTimer = null;
-let secondsWatched = 0;
-
-// --- CONNEXION ---
-async function handleAuth() {
-    try {
-        const result = await window.signInWithPopup(window.auth, window.googleProvider);
-        const user = result.user;
-
-        document.getElementById('auth-screen').classList.remove('active');
-        document.getElementById('main-hub').style.display = 'block';
-
-        const userPath = 'users/' + user.uid;
-        const userRef = window.dbRef(window.database, userPath);
-        
-        // Correction : On vérifie si l'utilisateur existe
-        const snapshot = await window.dbGet(userRef);
-        if (!snapshot.exists()) {
-            await window.dbSet(userRef, { 
-                nom: user.displayName, 
-                email: user.email, 
-                solde: 0,
-                date: new Date().toLocaleDateString()
-            });
+                // Synchronisation Solde + VPN
+                window.dbOnValue(userRef, (s) => {
+                    const d = s.val() || {solde:0, vpn:{time:0, pubs:0}};
+                    document.getElementById('user-balance-fcf').innerText = (d.solde || 0) + " FCFA";
+                    document.getElementById('user-balance').innerText = ((d.solde || 0) / 600).toFixed(2) + " $";
+                    
+                    vpnTime = d.vpn?.time || 0;
+                    pubsToday = d.vpn?.pubs || 0;
+                    document.getElementById('pub-count').innerText = pubsToday;
+                    document.getElementById('pub-bar').style.width = (pubsToday * 5) + "%";
+                    if(!window.vpnInt) startVPNCountdown(user.uid);
+                });
+            } catch (e) { showToast(e.message); }
         }
 
-        // Mise à jour du solde en temps réel
-        window.dbOnValue(userRef, (snap) => {
-            const data = snap.val() || { solde: 0 };
-            const solde = data.solde || 0;
-            if(document.getElementById('user-balance-fcf')) {
-                document.getElementById('user-balance-fcf').innerText = solde + " FCFA";
-                document.getElementById('user-balance').innerText = (solde / 600).toFixed(2) + " $";
-            }
-        });
-
-        showToast("Salut " + user.displayName + " ! 👋");
-    } catch (e) {
-        console.error(e);
-        showToast("Erreur : " + e.message);
-    }
-}
-
-// --- GAINS ---
-async function ajouterGain(montant, type) {
-    const user = window.auth.currentUser;
-    if (!user) return;
-
-    const soldePath = 'users/' + user.uid + '/solde';
-    const soldeRef = window.dbRef(window.database, soldePath);
-    
-    const snapshot = await window.dbGet(soldeRef);
-    const actuel = snapshot.val() || 0;
-
-    await window.dbSet(soldeRef, actuel + montant);
-    showToast(type === "film" ? "+10 FCFA ! 📺" : "+25 FCFA ! 🤝");
-}
-
-// --- LECTEUR ---
-function playMedia(url, title) {
-    const playerScreen = document.getElementById('player-screen');
-    const iframe = document.getElementById('main-player');
-    const rewardTimer = document.getElementById('reward-timer');
-
-    iframe.src = url;
-    document.getElementById('player-title').innerText = title;
-    playerScreen.classList.add('active');
-    rewardTimer.style.display = 'block';
-    
-    secondsWatched = 0;
-    if (watchTimer) clearInterval(watchTimer);
-
-    watchTimer = setInterval(() => {
-        if (!document.hidden) {
-            secondsWatched++;
-            rewardTimer.innerText = "Récompense dans " + (60 - secondsWatched) + "s... ⏳";
+        async function regarderPubVPN() {
+            const u = window.auth.currentUser;
+            if(!u || pubsToday >= 20) return showToast("Limite atteinte !");
+            if(typeof show_8884441 === 'function') show_8884441();
             
-            if (secondsWatched >= 60) {
-                clearInterval(watchTimer);
-                ajouterGain(10, "film");
-                rewardTimer.innerText = "Gain validé ! ✅";
+            await window.dbSet(window.dbRef(window.database, `users/${u.uid}/vpn`), {
+                time: vpnTime + 720,
+                pubs: pubsToday + 1
+            });
+            showToast("+12 min ajoutées 🛡️");
+        }
+
+        function startVPNCountdown(uid) {
+            window.vpnInt = setInterval(() => {
+                if(vpnTime > 0) {
+                    vpnTime--;
+                    let h = Math.floor(vpnTime/3600), m = Math.floor((vpnTime%3600)/60), s = vpnTime%60;
+                    document.getElementById('vpn-timer-display').innerText = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+                    if(vpnTime % 30 === 0) window.dbSet(window.dbRef(window.database, `users/${uid}/vpn/time`), vpnTime);
+                } else { 
+                    document.getElementById('vpn-timer-display').innerText = "00:00:00";
+                    document.getElementById('vpn-timer-display').style.color = "red"; 
+                }
+            }, 1000);
+        }
+
+        function playMedia(url, title) {
+            if(vpnTime <= 0) return showToast("Activez le VPN pour étudier ! 🛡️");
+            document.getElementById('main-player').src = url;
+            document.getElementById('player-screen').classList.add('active');
+            secondsWatched = 0;
+            if(watchTimer) clearInterval(watchTimer);
+            watchTimer = setInterval(() => {
+                if(!document.hidden) {
+                    secondsWatched++;
+                    document.getElementById('reward-timer').innerText = "Gain dans " + (60-secondsWatched) + "s... ⏳";
+                    if(secondsWatched >= 60) { clearInterval(watchTimer); ajouterGain(10); document.getElementById('reward-timer').innerText = "Gain encaissé ! ✅"; }
+                }
+            }, 1000);
+        }
+
+        async function ajouterGain(m) {
+            const u = window.auth.currentUser;
+            const r = window.dbRef(window.database, `users/${u.uid}/solde`);
+            const s = await window.dbGet(r);
+            await window.dbSet(r, (s.val() || 0) + m);
+            showToast("+" + m + "F validés ! 💰");
+        }
+
+        function secretClick() {
+            const n = Date.now();
+            if(n - lastClick > 2000) clickCount = 0;
+            clickCount++; lastClick = n;
+            if(clickCount === 5) {
+                const p = prompt("🔑 CODE MASTER :");
+                if(p === "2026") { document.getElementById('admin-section').style.display = 'block'; chargerMembres(); }
             }
         }
-    }, 1000);
-}
 
-function closePlayer() {
-    clearInterval(watchTimer);
-    document.getElementById('main-player').src = "";
-    document.getElementById('player-screen').classList.remove('active');
-}
+        async function chargerMembres() {
+            const snap = await window.dbGet(window.dbRef(window.database, 'users'));
+            const list = document.getElementById('users-list');
+            list.innerHTML = ""; let total = 0;
+            snap.forEach(c => {
+                const u = c.val(); total += (u.solde || 0);
+                list.innerHTML += `<div style="border-bottom:1px solid #333; padding:5px;">👤 ${u.nom} : <b>${u.solde}F</b></div>`;
+            });
+            document.getElementById('admin-stats').innerText = "Total dû système : " + total + " FCFA";
+        }
 
-function showToast(msg) {
-    const toast = document.getElementById('toast');
-    document.getElementById('toast-msg').innerText = msg;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
-}
-</script>
+        function demanderRetrait() {
+            const u = window.auth.currentUser;
+            const s = document.getElementById('user-balance-fcf').innerText;
+            if(parseInt(s) < 500) return showToast("Minimum 500F requis ! 💪");
+            window.open(`https://wa.me SIAPI: ${s} pour ${u.displayName}`, '_blank');
+        }
+
+        function closePlayer() { clearInterval(watchTimer); document.getElementById('main-player').src=""; document.getElementById('player-screen').classList.remove('active'); }
+        function showToast(m) { const t = document.getElementById('toast'); document.getElementById('toast-msg').innerText = m; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
+    </script>
 </body>
-  </html>
-
+    </html>
+    
