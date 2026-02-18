@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SIAPI PLATINUM | 💎 HUB ÉDUCATIF</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#050505">
+
+    <style>
+        :root { --primary: #00ff88; --dark: #050505; --gold: #ffd700; --violet: #8a2be2; --glass: rgba(255,255,255,0.08); }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--dark); color: white; margin: 0; user-select: none; overflow-x: hidden; padding-bottom: 110px; }
+        #toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--primary), #00bd65); color: #000; padding: 12px 25px; border-radius: 50px; font-weight: 900; z-index: 100000; transition: 0.5s; width: 80%; text-align: center; font-size: 13px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        #toast.show { top: 30px; }
+        .screen { position:fixed; top:0; left:0; width:100%; height:100%; background:var(--dark); z-index:40000; display:none; flex-direction:column; overflow-y: auto; align-items: center; padding-top: 20px; }
+        .active { display: flex !important; }
+        .header { padding: 20px; background: #000; border-bottom: 2px solid var(--violet); width: 100%; text-align: center; box-sizing: border-box; }
+        .wallet { font-size: 30px; font-weight: 900; color: var(--primary); }
+        .btn-main { background: linear-gradient(135deg, var(--violet), #4b0082); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: bold; width: 90%; margin: 10px 0; cursor: pointer; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1); }
+        .scroll-x { display: flex; overflow-x: auto; gap: 12px; padding: 15px; width: 100%; box-sizing: border-box; scrollbar-width: none; }
+        .media-card { min-width: 135px; background: #111; border-radius: 15px; border: 1px solid var(--glass); text-align: center; padding-bottom: 10px; cursor:pointer; }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; height: 70px; background: rgba(0,0,0,0.95); display: flex; justify-content: space-around; align-items: center; border-top: 1px solid var(--glass); z-index: 35000; }
+        input { width: 85%; padding: 15px; margin: 8px 0; background: var(--glass); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: white; text-align: center; font-size: 14px; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); } }
+        @keyframes slideText { 0% { transform: translateX(100%); } 100% { transform: translateX(-200%); } }
+    </style>
+</head>
+<body>
+
+    <div id="toast"><span id="toast-msg">Connexion...</span></div>
+
+    <!-- ECRAN AUTH -->
+    <div id="auth-screen" class="screen active" style="justify-content: center;">
+        <div id="logo-admin-trigger" style="border: 3px solid var(--primary); border-radius: 50%; width: 90px; height: 90px; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+            <span style="font-weight: 900; color: var(--primary); font-size: 20px;">SIAPI</span>
+        </div>
+        <h2 style="margin: 25px 0; font-size: 18px; color: #fff;">ACCÈS PLATINUM 💎</h2>
+        <button id="google-login-btn" class="btn-main" style="background: white; color: black; display: flex; align-items: center; justify-content: center; gap: 12px; border-radius: 50px; width: 85%;">
+            <img src="https://www.gstatic.com" width="20"> 
+            <span style="font-weight: 900;">CONTINUER AVEC GOOGLE</span>
+        </button>
+    </div>
+
+    <!-- HUB PRINCIPAL -->
+    <div id="main-hub" style="display:none;">
+        <header class="header">
+            <div class="wallet" id="user-balance">0.00 $</div>
+            <div id="user-balance-fcf" style="font-size: 14px; color: var(--gold); font-weight: bold;">0 FCFA</div>
+        </header>
+
+        <div style="margin: 15px; padding: 20px; background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(138,43,226,0.1)); border-radius: 15px; border: 1px solid var(--primary); text-align: center;">
+            <h3 style="margin: 0; color: var(--primary); font-size: 15px;">💰 GAGNEZ DE L'ARGENT RÉEL</h3>
+            <p style="font-size: 11px; color: #ccc;">Films (+10F) | Quiz (+5F) | Parrainage (+25F)</p>
+        </div>
+
+        <div style="margin: 0 15px; padding: 10px; background: rgba(0,255,136,0.05); border-radius: 10px; border: 1px dashed rgba(0,255,136,0.3); overflow: hidden;">
+            <div id="ticker-content" style="font-size: 10px; color: var(--primary); white-space: nowrap; animation: slideText 12s linear infinite;">Chargement des paiements récents...</div>
+        </div>
+
+        <!-- QUIZ -->
+        <div id="quiz-section" style="background: var(--glass); margin: 15px; padding: 15px; border-radius: 15px; border: 2px solid var(--gold); text-align:center;">
+            <div id="quiz-init">
+                <button id="unlock-quiz-btn" class="btn-main" style="background:var(--gold); color:black; margin:0; width:100%;">VOIR LA PUB & JOUER (+5F) 📺</button>
+            </div>
+            <div id="quiz-play" style="display:none;">
+                <p id="q-text" style="font-weight:bold; font-size:13px; margin-bottom:15px;"></p>
+                <div id="q-options" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
+            </div>
+        </div>
+
+        <!-- IA TUTEUR -->
+        <div style="background: var(--glass); margin: 15px; padding: 15px; border-radius: 15px; border: 1px solid var(--violet);">
+            <div id="ai-chat" style="font-size: 11px; color: #ddd; margin-bottom: 10px; background:rgba(0,0,0,0.2); padding:8px; border-radius:5px;">Posez votre question scolaire...</div>
+            <div style="display:flex; gap:5px;">
+                <input type="text" id="ai-q" placeholder="Ex: Loi d'Ohm ?" style="width:100%; margin:0; padding:12px; text-align:left;">
+                <button id="ai-ask-btn" style="background:var(--violet); border:none; padding:0 15px; border-radius:10px; color:white; font-weight:bold;">ASK</button>
+            </div>
+        </div>
+
+        <div style="padding: 20px 0 0 15px; font-weight: bold; color: var(--primary); font-size: 13px;">📡 FILMS & TV DIRECT (+10F)</div>
+        <div id="live-scroll" class="scroll-x"></div>
+
+        <div style="background: var(--glass); margin: 15px; padding: 15px; border-radius: 15px; text-align: center; border: 1px dashed gray;">
+            <input type="text" id="ref-link" readonly style="font-size: 10px; border:none; background:transparent; color:gray; width: 100%; margin-bottom:10px;">
+            <button id="share-btn" class="btn-main" style="background: linear-gradient(135deg, #007aff, #00c6ff); border-radius: 50px; margin:0; width:100%;">INVITER (+25F) 📲</button>
+        </div>
+    </div>
+
+    <!-- PLAYER -->
+    <div id="player-screen" class="screen" style="background:#000;">
+        <div class="header" style="background:rgba(0,0,0,0.8);"><span>LECTURE</span> <button id="close-player-btn" style="float:right; color:red; border:none; background:none; font-size:25px;">✕</button></div>
+        <iframe id="main-player" width="100%" height="250" src="" frameborder="0" allowfullscreen style="margin-top:40px;"></iframe>
+        <div id="reward-msg" style="color:var(--primary); font-size:12px; margin-top:25px; display:none; animation: pulse 1s infinite;">Gain en cours (15s)... 🎬</div>
+    </div>
+
+    <!-- WITHDRAW -->
+    <div id="withdraw-screen" class="screen">
+        <div class="header">RETRAIT <button id="close-withdraw-btn" style="float:right; border:none; background:none; color:white; font-size:20px;">✕</button></div>
+        <div style="width:100%; text-align:center; margin-top:40px;">
+            <input type="text" id="w-method" placeholder="Orange ou MTN Money">
+            <input type="text" id="w-number" placeholder="Numéro">
+            <button id="withdraw-submit-btn" class="btn-main">VALIDER LE RETRAIT</button>
+        </div>
+    </div>
+
+    <!-- SOLDE FLOTTANT -->
+    <div onclick="window.scrollTo({top:0, behavior:'smooth'})" style="position: fixed; right: 15px; bottom: 85px; background: #000; border: 2px solid var(--primary); padding: 12px 18px; border-radius: 35px; z-index: 30000; box-shadow: 0 5px 15px rgba(0,0,0,0.8);">
+        <div style="width: 8px; height: 8px; background: var(--primary); border-radius: 50%; animation: pulse 1.5s infinite; display:inline-block; margin-right:5px;"></div>
+        <span id="float-bal" style="font-weight: 900; font-size: 13px; color: var(--primary);">0 F</span>
+    </div>
+
+    <nav class="bottom-nav">
+        <div onclick="location.reload()" style="font-size:24px;">🏠</div>
+        <div id="open-withdraw-btn" style="font-size:24px;">🏧</div>
+        <div id="logout-btn" style="font-size:24px;">🚪</div>
+    </nav>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com";
+        import { getDatabase, ref, onValue, set, runTransaction, push } from "https://www.gstatic.com";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCop4EVQ0Nfpwq0aRtgbQemxMVD626vP00",
+            authDomain: "siapi-74d6d.firebaseapp.com",
+            projectId: "siapi-74d6d",
+            storageBucket: "siapi-74d6d.firebasestorage.app",
+            messagingSenderId: "1049903654521",
+            appId: "1:1049903654521:web:a267a58ba793e8d09916a8",
+            databaseURL: "https://siapi-74d6d-default-rtdb.firebaseio.com"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+        const TAUX = 600;
+        let userBal = 0;
+        let secretCounter = 0;
+
+        // -- TOAST UTILS --
+        const showToast = (m) => { const t = document.getElementById('toast'); document.getElementById('toast-msg').innerText = m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3500); };
+
+        // -- AUTH --
+        document.getElementById('google-login-btn').onclick = () => {
+            const provider = new GoogleAuthProvider();
+            signInWithPopup(auth, provider).catch(() => showToast("Erreur Google Login"));
+        };
+
+        document.getElementById('logout-btn').onclick = () => signOut(auth);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const userRef = ref(db, 'users/' + user.uid);
+                onValue(userRef, (s) => {
+                    const d = s.val();
+                    if (!d) {
+                        const rId = new URLSearchParams(window.location.search).get('ref');
+                        set(userRef, { nom: user.displayName, email: user.email, solde: 0, parrain: rId || "aucun", banni: false });
+                        if(rId && rId !== user.uid) runTransaction(ref(db, `users/${rId}/solde`), c => (c || 0) + (25/TAUX));
+                    } else if (d.banni) {
+                        signOut(auth); alert("Compte banni.");
+                    } else {
+                        userBal = d.solde || 0;
+                        const fcfa = Math.floor(userBal * TAUX);
+                        document.getElementById('user-balance').innerText = userBal.toFixed(2) + " $";
+                        document.getElementById('user-balance-fcf').innerText = fcfa + " FCFA";
+                        document.getElementById('float-bal').innerText = fcfa + " F";
+                        document.getElementById('auth-screen').classList.remove('active');
+                        document.getElementById('main-hub').style.display = 'block';
+                    }
+                });
+                document.getElementById('ref-link').value = window.location.origin + window.location.pathname + "?ref=" + user.uid;
+                loadVideos();
+            } else {
+                document.getElementById('auth-screen').classList.add('active');
+                document.getElementById('main-hub').style.display = 'none';
+            }
+        });
+
+        // -- QUIZ --
+        document.getElementById('unlock-quiz-btn').onclick = () => {
+            window.open("https://alwingulla.com", '_blank');
+            showToast("Déblocage dans 5s...");
+            setTimeout(() => {
+                document.getElementById('quiz-init').style.display = "none";
+                document.getElementById('quiz-play').style.display = "block";
+                const qList = [{q:"2 + 2 x 5 ?", r:["20","12","10","15"], c:1}, {q:"H2O est ?", r:["Gaz","Acide","Eau","Sel"], c:2}];
+                const q = qList[Math.floor(Math.random()*qList.length)];
+                document.getElementById('q-text').innerText = q.q;
+                const optZone = document.getElementById('q-options');
+                optZone.innerHTML = "";
+                q.r.forEach((txt, i) => {
+                    const btn = document.createElement('button');
+                    btn.innerText = txt; btn.className = "btn-main"; btn.style = "padding:12px; font-size:12px;";
+                    btn.onclick = () => {
+                        if(i === q.c) {
+                            runTransaction(ref(db, `users/${auth.currentUser.uid}/solde`), s => (s||0)+(5/TAUX));
+                            showToast("+5 FCFA ✅");
+                        } else showToast("Faux !");
+                        document.getElementById('quiz-init').style.display = "block";
+                        document.getElementById('quiz-play').style.display = "none";
+                    };
+                    optZone.appendChild(btn);
+                });
+            }, 5000);
+        };
+
+        // -- FILMS --
+        const loadVideos = () => {
+            onValue(ref(db, 'lives'), (s) => {
+                const c = document.getElementById('live-scroll'); c.innerHTML = "";
+                if(!s.exists()) return;
+                s.forEach(child => {
+                    const l = child.val();
+                    const card = document.createElement('div'); card.className = "media-card";
+                    card.innerHTML = `<div style="height:80px; display:flex; align-items:center; justify-content:center; font-size:30px;">🎬</div><small>${l.name}</small>`;
+                    card.onclick = () => {
+                        document.getElementById('main-player').src = l.url;
+                        document.getElementById('player-screen').classList.add('active');
+                        document.getElementById('reward-msg').style.display = "block";
+                        setTimeout(() => {
+                            runTransaction(ref(db, `users/${auth.currentUser.uid}/solde`), s => (s||0)+(10/TAUX));
+                            showToast("+10 FCFA ! 🎞️");
+                            document.getElementById('reward-msg').style.display = "none";
+                        }, 15000);
+                    };
+                    c.appendChild(card);
+                });
+            });
+        };
+
+        // -- IA --
+        document.getElementById('ai-ask-btn').onclick = async () => {
+            const q = document.getElementById('ai-q').value; if(!q) return;
+            document.getElementById('ai-chat').innerText = "IA réfléchit...";
+            try {
+                const r = await fetch(`https://text.pollinations.ai{encodeURIComponent(q + " (réponse scolaire courte)")}`);
+                const t = await r.text(); document.getElementById('ai-chat').innerText = t;
+            } catch(e) { document.getElementById('ai-chat').innerText = "Erreur IA."; }
+        };
+
+        // -- RETRAIT --
+        document.getElementById('withdraw-submit-btn').onclick = async () => {
+            if (userBal < (500/TAUX)) return showToast("Min 500F");
+            const m = document.getElementById('w-method').value, n = document.getElementById('w-number').value;
+            if(!m || !n) return showToast("Remplis tout");
+            await push(ref(db, 'payouts_requests'), { uid: auth.currentUser.uid, amount: Math.floor(userBal*TAUX), method: m, num: n, status: "EN ATTENTE" });
+            await set(ref(db, `users/${auth.currentUser.uid}/solde`), 0);
+            showToast("Demande envoyée !"); document.getElementById('withdraw-screen').classList.remove('active');
+        };
+
+        // -- UI ACTIONS --
+        document.getElementById('close-player-btn').onclick = () => { document.getElementById('main-player').src = ""; document.getElementById('player-screen').classList.remove('active'); };
+        document.getElementById('open-withdraw-btn').onclick = () => document.getElementById('withdraw-screen').classList.add('active');
+        document.getElementById('close-withdraw-btn').onclick = () => document.getElementById('withdraw-screen').classList.remove('active');
+        document.getElementById('share-btn').onclick = async () => {
+            const link = document.getElementById('ref-link').value;
+            try { await navigator.share({ title: 'SIAPI', text: 'Gagne de l\'argent !', url: link }); } catch(e) {}
+        };
+        document.getElementById('logo-admin-trigger').onclick = () => { secretCounter++; if(secretCounter===5) { alert("Admin : Utilisez la console Firebase."); secretCounter=0; } };
+        
+        setInterval(() => {
+            const list = ["Paul a retiré 1200F", "Sali a reçu 500F", "Moussa a retiré 2500F"];
+            document.getElementById('ticker-content').innerText = list[Math.floor(Math.random()*list.length)];
+        }, 4000);
+        
+        if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+    </script>
+</body>
+                  </html>
+
