@@ -169,7 +169,35 @@
             window.open(`https://wa.me SIAPI: ${s} pour ${u.displayName}`, '_blank');
         };
 
-        window.secretClick = () => {
+                        window.secretClick = () => {
+            const n = Date.now(); 
+            if(n - lastClick > 2000) clickCount = 0;
+            clickCount++; 
+            lastClick = n;
+
+            if(clickCount === 5) {
+                const user = window.auth.currentUser;
+                // VÉRIFICATION DE TON EMAIL PERSONNEL
+                const emailMaître = "abdoulk.diodoi@gmail.com"; 
+
+                if (user && user.email === emailMaître) {
+                    const p = prompt("🔑 CODE MASTER SIAPI (4 CHIFFRES) :");
+                    if(p === "2026") { 
+                        document.getElementById('admin-section').style.display = 'block'; 
+                        chargerMembres(); 
+                        showToast("ACCÈS MAÎTRE VALIDÉ 🔐");
+                        // Scroll automatique vers le menu Admin
+                        document.getElementById('admin-section').scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        showToast("Code erroné ❌");
+                    }
+                } else {
+                    showToast("Accès réservé au Créateur 🛡️");
+                }
+            }
+        };
+        
+ = () => {
             const n = Date.now(); if(n - lastClick > 2000) clickCount = 0;
             clickCount++; lastClick = n;
             if(clickCount === 5) {
