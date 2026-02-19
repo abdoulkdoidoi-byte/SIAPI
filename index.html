@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SIAPI PLATINUM | 💎 HUB ÉDUCATIF</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#050505">
-    <!-- PUB MONETAG -->
     <script src="https://alwingulla.com" data-zone="8884441" async></script>
-
     <style>
         :root { --primary: #00ff88; --dark: #050505; --gold: #ffd700; --violet: #8a2be2; --glass: rgba(255,255,255,0.05); }
         body { font-family: 'Segoe UI', sans-serif; background: var(--dark); color: white; margin: 0; user-select: none; overflow-x: hidden; padding-bottom: 90px; }
@@ -20,78 +17,61 @@
         .wallet { font-size: 32px; font-weight: 900; color: var(--primary); }
         .btn-main { background: linear-gradient(135deg, var(--violet), #4b0082); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: bold; width: 90%; margin: 10px 0; cursor: pointer; transition: 0.3s; }
         .scroll-x { display: flex; overflow-x: auto; gap: 12px; padding: 15px; width: 100%; box-sizing: border-box; }
-        .media-card { min-width: 140px; background: #111; border-radius: 15px; overflow: hidden; border: 1px solid var(--glass); text-align: center; padding-bottom: 8px; cursor:pointer; }
+        .media-card { min-width: 140px; background: #111; border-radius: 15px; overflow: hidden; border: 1px solid var(--glass); text-align: center; padding-bottom: 8px; }
     </style>
 </head>
 <body>
-
     <div id="toast"><span id="toast-msg">Connexion...</span></div>
 
-    <!-- ECRAN AUTH -->
+    <!-- LOGIN -->
     <div id="auth-screen" class="screen active" style="justify-content: center;">
-        <div id="logo-siapi" style="border: 3px solid var(--primary); border-radius: 50%; width: 80px; height: 80px; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+        <div onclick="secretClick()" style="border: 3px solid var(--primary); border-radius: 50%; width: 80px; height: 80px; display:flex; align-items:center; justify-content:center; cursor:pointer;">
             <span style="font-weight: 900; color: var(--primary);">SIAPI</span>
         </div>
-        <h2 style="text-align:center;">BIENVENUE ! 💎<br><small style="color:var(--gold); font-size:10px;">Tout est accessible ici : Apprenez & Gagnez</small></h2>
+        <h2 style="text-align:center;">BIENVENUE ! 💎<br><small style="color:var(--gold); font-size:10px;">Apprenez & Encaissez</small></h2>
         <button class="btn-main" id="btn-login">ACCÉDER AU HUB PLATINUM</button>
     </div>
 
-    <!-- HUB PRINCIPAL -->
+    <!-- HUB -->
     <div id="main-hub" style="display:none;">
         <header class="header">
             <div class="wallet" id="user-balance-fcf">0 FCFA</div>
-            <div id="user-balance" style="font-size: 14px; color: var(--gold); font-weight: bold;">0.00 $</div>
+            <div id="user-balance" style="font-size: 14px; color: var(--gold);">0.00 $</div>
         </header>
 
-        <!-- BIENVENUE -->
-        <div style="background: var(--glass); margin: 15px; padding: 15px; border-radius: 10px; border-left: 4px solid var(--primary);">
-            <h3 id="welcome-name" style="margin:0; font-size:16px;">Chargement...</h3>
-            <p style="font-size:11px; color:#aaa; margin:5px 0 0 0;">Accédez à tous nos contenus du CEP au Doctorat.</p>
-        </div>
-
-        <!-- VPN CLOUD 4H / 20 PUBS -->
+        <!-- VPN 4H / 20 PUBS -->
         <div style="background: rgba(0,255,136,0.05); margin: 15px; padding: 15px; border-radius: 15px; border: 1px solid var(--primary); text-align: center;">
-            <div style="font-size:9px; color:var(--primary); font-weight:bold;">SÉCURITÉ VPN (4H / 20 PUBS)</div>
+            <div style="font-size:9px; color:var(--primary); font-weight:bold;">VPN SIAPI (4H / 20 PUBS)</div>
             <div id="vpn-timer-display" style="font-size: 28px; font-weight: 900; color: var(--gold);">00:00:00</div>
             <div style="font-size:10px; margin-top:10px;">Objectif : <span id="pub-count">0</span>/20 Pubs</div>
             <div style="width:80%; height:8px; background:#222; margin:5px auto; border-radius:10px; overflow:hidden;">
                 <div id="pub-bar" style="width:0%; height:100%; background:var(--primary); transition:0.3s;"></div>
             </div>
-            <button id="btn-vpn" class="btn-main" style="background: var(--primary); color: black; padding: 8px; font-size:12px; margin-top:10px;">RECHARGER ACCÈS (+12 MIN) 📺</button>
+            <button id="btn-vpn" class="btn-main" style="background: var(--primary); color: black; padding: 8px; font-size:12px; margin-top:10px;">VOIR PUB (+12 MIN) 📺</button>
         </div>
 
-        <!-- COURS -->
-        <div style="padding-left: 15px; font-weight: bold; color: var(--primary); font-size: 13px; margin-top:15px;">🎓 COURS RÉMUNÉRÉS (+10 FCFA)</div>
-        <div class="scroll-x" id="course-list">
-            <div class="media-card" data-url="https://www.youtube.com" data-title="Maths : Logarithmes">
-                <div style="height:80px; font-size:40px; padding-top:10px;">📐</div><small>MATHS</small>
-            </div>
-            <div class="media-card" data-url="https://www.youtube.com" data-title="Philo : Conscience">
-                <div style="height:80px; font-size:40px; padding-top:10px;">🤔</div><small>PHILO</small>
-            </div>
+        <div class="scroll-x">
+            <div class="media-card" id="card-maths"><div style="height:80px; font-size:40px; padding-top:10px;">📐</div><small>MATHS (+10F)</small></div>
+            <div class="media-card" id="card-philo"><div style="height:80px; font-size:40px; padding-top:10px;">🤔</div><small>PHILO (+10F)</small></div>
         </div>
 
-        <!-- RETRAIT -->
-        <div style="background: rgba(255, 215, 0, 0.1); border: 1px solid var(--gold); margin: 15px; padding: 15px; border-radius: 15px; text-align: center;">
-            <button id="btn-retrait" class="btn-main" style="background: var(--gold); color: black;">DEMANDER MON RETRAIT 📲</button>
-        </div>
+        <button id="btn-retrait" class="btn-main" style="background: var(--gold); color: black; margin: 15px auto; display:block;">RETIRER MES GAINS 📲</button>
 
-        <!-- ADMIN (CACHÉ) -->
+        <!-- ADMIN -->
         <div id="admin-section" style="display:none; margin: 15px; padding: 15px; background: rgba(255,0,0,0.1); border: 2px dashed red; border-radius: 15px;">
-            <h3 style="color:red; font-size:14px; margin-top:0;">🛠️ LOGICIEL MAÎTRE</h3>
-            <div id="admin-stats" style="font-size:10px; margin-bottom:10px;">Total dû : 0 FCFA</div>
-            <div id="users-list" style="max-height:150px; overflow-y:auto; font-size:10px; background:rgba(0,0,0,0.3); padding:5px;"></div>
+            <h3 style="color:red; font-size:14px; margin:0;">🛠️ LOGICIEL MAÎTRE</h3>
+            <div id="admin-stats" style="font-size:10px;">Total dû : 0 FCFA</div>
+            <div id="users-list" style="max-height:150px; overflow-y:auto; font-size:10px; margin-top:10px;"></div>
         </div>
     </div>
 
     <!-- PLAYER -->
     <div id="player-screen" class="screen" style="background:#000;">
-        <div class="header"><span id="player-title">LECTURE</span> <button id="btn-close-player" style="float:right; color:red; border:none; background:none; font-size:25px;">✕</button></div>
+        <div class="header"><span id="player-title">COURS</span> <button id="btn-close-player" style="float:right; color:red; border:none; background:none; font-size:25px;">✕</button></div>
         <iframe id="main-player" width="100%" height="250" src="" frameborder="0" allowfullscreen></iframe>
         <div id="reward-timer" style="color:var(--primary); text-align:center; margin-top:20px; font-weight:bold;">Gain dans 60s... ⏳</div>
     </div>
 
-    <!-- SCRIPTS CORE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com";
         import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com";
@@ -115,14 +95,12 @@
 
         let vpnTime = 0, pubsToday = 0, clickCount = 0, lastClick = 0, watchTimer = null, secondsWatched = 0;
 
-        // --- FONCTIONS CORE ---
-        async function handleAuth() {
+        window.handleAuth = async () => {
             try {
                 const res = await signInWithPopup(auth, provider);
                 const user = res.user;
                 document.getElementById('auth-screen').style.display = 'none';
                 document.getElementById('main-hub').style.display = 'block';
-                document.getElementById('welcome-name').innerText = "Salut " + user.displayName + " ! 💎";
 
                 const userRef = ref(database, 'users/' + user.uid);
                 const snap = await get(userRef);
@@ -130,8 +108,9 @@
 
                 onValue(userRef, (s) => {
                     const d = s.val() || {solde:0, vpn:{time:0, pubs:0}};
-                    document.getElementById('user-balance-fcf').innerText = (d.solde || 0) + " FCFA";
-                    document.getElementById('user-balance').innerText = ((d.solde || 0) / 600).toFixed(2) + " $";
+                    document.getElementById('user-balance-fcf').innerText = d.solde + " FCFA";
+                    document.getElementById('user-balance').innerText = (d.solde / 600).toFixed(2) + " $";
+                    
                     vpnTime = d.vpn?.time || 0;
                     pubsToday = d.vpn?.pubs || 0;
                     document.getElementById('pub-count').innerText = pubsToday;
@@ -139,15 +118,17 @@
                     if(!window.vpnInt) startVPNCountdown(user.uid);
                 });
             } catch (e) { showToast(e.message); }
-        }
+        };
 
-        async function regarderPubVPN() {
+        window.regarderPubVPN = async () => {
             const u = auth.currentUser;
-            if(!u || pubsToday >= 20) return showToast("Limite atteinte !");
+            if(!u || pubsToday >= 20) return showToast("Limite de 20 pubs atteinte ! ✨");
             if(typeof show_8884441 === 'function') show_8884441();
+            
+            // +12 minutes = 720 secondes
             await set(ref(database, `users/${u.uid}/vpn`), { time: vpnTime + 720, pubs: pubsToday + 1 });
-            showToast("+12 min ajoutées 🛡️");
-        }
+            showToast("VPN rechargé : +12 min 🛡️");
+        };
 
         function startVPNCountdown(uid) {
             window.vpnInt = setInterval(() => {
@@ -160,8 +141,8 @@
             }, 1000);
         }
 
-        function playMedia(url, title) {
-            if(vpnTime <= 0) return showToast("Activez le VPN pour étudier ! 🛡️");
+        window.playMedia = (url, title) => {
+            if(vpnTime <= 0) return showToast("Activez le VPN (4H) pour étudier ! 🛡️");
             document.getElementById('main-player').src = url;
             document.getElementById('player-title').innerText = title;
             document.getElementById('player-screen').classList.add('active');
@@ -169,63 +150,52 @@
             watchTimer = setInterval(async () => {
                 if(!document.hidden) {
                     secondsWatched++;
-                    document.getElementById('reward-timer').innerText = "Gain dans " + (60-secondsWatched) + "s... ⏳";
-                    if(secondsWatched >= 60) { 
+                    document.getElementById('reward-timer').innerText = "Gain dans 60s... ⏳";
+                    if(secondsWatched >= 60) {
                         clearInterval(watchTimer);
                         const u = auth.currentUser;
                         const r = ref(database, `users/${u.uid}/solde`);
                         const s = await get(r);
                         await set(r, (s.val() || 0) + 10);
-                        showToast("+10F validés ! 💰");
-                        document.getElementById('reward-timer').innerText = "Gain encaissé ! ✅";
+                        showToast("+10 FCFA encaissés ! 💰");
                     }
                 }
             }, 1000);
-        }
+        };
 
-        function secretClick() {
+        window.demanderRetrait = () => {
+            const u = auth.currentUser;
+            const s = document.getElementById('user-balance-fcf').innerText;
+            window.open(`https://wa.me SIAPI: ${s} pour ${u.displayName}`, '_blank');
+        };
+
+        window.secretClick = () => {
             const n = Date.now(); if(n - lastClick > 2000) clickCount = 0;
             clickCount++; lastClick = n;
             if(clickCount === 5) {
                 const p = prompt("🔑 CODE MASTER :");
-                if(p === "2026") { 
-                    document.getElementById('admin-section').style.display = 'block'; 
-                    chargerMembres(); 
-                    showToast("MODE ADMIN ACTIVÉ");
-                }
+                if(p === "2026") { document.getElementById('admin-section').style.display = 'block'; chargerMembres(); }
             }
-        }
+        };
 
         async function chargerMembres() {
             const snap = await get(ref(database, 'users'));
             const list = document.getElementById('users-list'); list.innerHTML = ""; let total = 0;
-            snap.forEach(c => {
-                const u = c.val(); total += (u.solde || 0);
-                list.innerHTML += `<div style="padding:5px; border-bottom:1px solid #333;">👤 ${u.nom} : ${u.solde}F</div>`;
-            });
-            document.getElementById('admin-stats').innerText = "Total dû système : " + total + " FCFA";
+            snap.forEach(c => { const u = c.val(); total += (u.solde || 0); list.innerHTML += `<div>${u.nom} : ${u.solde}F</div>`; });
+            document.getElementById('admin-stats').innerText = "Total dû : " + total + " FCFA";
         }
 
-        function demanderRetrait() {
-            const u = auth.currentUser;
-            const s = document.getElementById('user-balance-fcf').innerText;
-            if(parseInt(s) < 500) return showToast("Min. 500F requis !");
-            window.open(`https://wa.me SIAPI: ${s} pour ${u.displayName} (ID:${u.uid})`, '_blank');
-        }
-
+        window.closePlayer = () => { clearInterval(watchTimer); document.getElementById('main-player').src=""; document.getElementById('player-screen').classList.remove('active'); };
         function showToast(m) { const t = document.getElementById('toast'); document.getElementById('toast-msg').innerText = m; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
-        function closePlayer() { clearInterval(watchTimer); document.getElementById('main-player').src=""; document.getElementById('player-screen').classList.remove('active'); }
 
-        // --- ATTACHE DES ÉVÉNEMENTS ---
-        document.getElementById('btn-login').onclick = handleAuth;
-        document.getElementById('btn-vpn').onclick = regarderPubVPN;
-        document.getElementById('btn-retrait').onclick = demanderRetrait;
-        document.getElementById('btn-close-player').onclick = closePlayer;
-        document.getElementById('logo-siapi').onclick = secretClick;
-        document.querySelectorAll('.media-card').forEach(card => {
-            card.onclick = () => playMedia(card.dataset.url, card.dataset.title);
-        });
+        document.getElementById('btn-login').onclick = window.handleAuth;
+        document.getElementById('btn-vpn').onclick = window.regarderPubVPN;
+        document.getElementById('btn-retrait').onclick = window.demanderRetrait;
+        document.getElementById('btn-close-player').onclick = window.closePlayer;
+        document.getElementById('logo-siapi').onclick = window.secretClick;
+        document.getElementById('card-maths').onclick = () => window.playMedia('https://www.youtube.com', 'Maths');
+        document.getElementById('card-philo').onclick = () => window.playMedia('https://www.youtube.com', 'Philo');
     </script>
 </body>
-    </html>
-    
+</html>
+
