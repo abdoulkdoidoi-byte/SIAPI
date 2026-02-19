@@ -24,107 +24,50 @@
 <body>
     <div id="toast"><span id="toast-msg">Connexion...</span></div>
 
+    <!-- ECRAN AUTH -->
     <div id="auth-screen" class="screen active" style="justify-content: center;">
         <div id="logo-siapi" style="border: 3px solid var(--primary); border-radius: 50%; width: 80px; height: 80px; display:flex; align-items:center; justify-content:center; cursor:pointer;">
             <span style="font-weight: 900; color: var(--primary);">SIAPI</span>
         </div>
-        <h2 style="text-align:center;">SIAPI PLATINUM 💎<br><small style="color:var(--gold); font-size:10px;">Apprenez & Encaissez</small></h2>
+        <h2 style="text-align:center;">SIAPI PLATINUM 💎<br><small style="color:var(--gold); font-size:10px;">Le Hub Africain : Apprenez & Encaissez</small></h2>
         <button class="btn-main" id="btn-login">ACCÉDER AU HUB INTERNATIONAL</button>
+        <p style="font-size:10px;"><a href="privacy.html" style="color:var(--gold);">Politique de Confidentialité</a></p>
     </div>
 
+    <!-- HUB PRINCIPAL -->
     <div id="main-hub" style="display:none;">
         <header class="header">
             <div class="wallet" id="user-balance-fcf">0 FCFA</div>
-            <div id="user-balance" style="font-size: 14px; color: var(--gold);">0.00 $</div>
         </header>
         <div style="background: rgba(0,255,136,0.05); margin: 15px; padding: 15px; border-radius: 15px; border: 1px solid var(--primary); text-align: center;">
             <div id="vpn-timer-display" style="font-size: 28px; font-weight: 900; color: var(--gold);">00:00:00</div>
-            <button id="btn-vpn" class="btn-main" style="background: var(--primary); color: black; padding: 8px; font-size:12px;">RECHARGER VPN (+12 MIN) 📺</button>
+            <button id="btn-vpn" class="btn-main" style="background: var(--primary); color: black; padding: 8px;">RECHARGER VPN (+12 MIN) 📺</button>
         </div>
         <div class="scroll-x">
-            <div class="media-card" id="card-maths" onclick="playMedia('https://www.youtube.com', 'Maths')"><div style="height:80px; font-size:40px; padding-top:10px;">📐</div><small>MATHS (+10F)</small></div>
-            <div class="media-card" id="card-philo" onclick="playMedia('https://www.youtube.com', 'Philo')"><div style="height:80px; font-size:40px; padding-top:10px;">🤔</div><small>PHILO (+10F)</small></div>
+            <div class="media-card" onclick="window.playMedia('https://www.youtube.com', 'MATHS')">📐<br><small>MATHS (+10F)</small></div>
+            <div class="media-card" onclick="window.playMedia('https://www.youtube.com', 'PHILO')">🤔<br><small>PHILO (+10F)</small></div>
         </div>
         <button id="btn-retrait" class="btn-main" style="background: var(--gold); color: black; margin: 15px auto; display:block;">RETRAIT MOBILE MONEY 📲</button>
     </div>
 
+    <!-- PLAYER -->
     <div id="player-screen" class="screen" style="background:#000;">
-        <div class="header"><span id="player-title">COURS</span> <button id="btn-close-player" onclick="closePlayer()" style="float:right; color:red; border:none; background:none; font-size:25px;">✕</button></div>
+        <div class="header"><span id="player-title">COURS</span> <button id="btn-close-player" style="float:right; color:red; border:none; background:none; font-size:25px;">✕</button></div>
         <iframe id="main-player" width="100%" height="250" src="" frameborder="0" allowfullscreen></iframe>
         <div id="reward-timer" style="color:var(--primary); text-align:center; margin-top:20px; font-weight:bold;">Gain dans 60s... ⏳</div>
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com";
-        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com";
-        import { getDatabase, ref, get, set, onValue, update } from "https://www.gstatic.com";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCop4EVQ0Nfpwq0aRtgbQemxMVD626vP00",
-            authDomain: "siapi-74d6d.firebaseapp.com",
-            databaseURL: "https://siapi-74d6d-default-rtdb.firebaseio.com",
-            projectId: "siapi-74d6d",
-            storageBucket: "siapi-74d6d.firebasestorage.app",
-            messagingSenderId: "1049903654521",
-            appId: "1:1049903654521:web:a267a58ba793e8d09916a8"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const database = getDatabase(app);
-        const provider = new GoogleAuthProvider();
-
-        let vpnTime = 0, watchTimer = null, secondsWatched = 0;
-
-        document.getElementById('btn-login').onclick = async () => {
-            try {
-                const res = await signInWithPopup(auth, provider);
-                document.getElementById('auth-screen').style.display = 'none';
-                document.getElementById('main-hub').style.display = 'block';
-                const userRef = ref(database, 'users/' + res.user.uid);
-                onValue(userRef, (s) => {
-                    const d = s.val() || {solde:0, vpn:{time:0}};
-                    document.getElementById('user-balance-fcf').innerText = (d.solde || 0) + " FCFA";
-                    vpnTime = d.vpn?.time || 0;
-                });
-            } catch (e) { alert("Erreur Auth. Vérifiez les domaines autorisés !"); }
-        };
-
-        window.playMedia = (url, title) => {
-            if(vpnTime <= 0) return alert("VPN Requis !");
-            document.getElementById('main-player').src = url;
-            document.getElementById('player-screen').classList.add('active');
-            secondsWatched = 0;
-            watchTimer = setInterval(async () => {
-                secondsWatched++;
-                document.getElementById('reward-timer').innerText = `Gain dans ${60-secondsWatched}s...`;
-                if(secondsWatched >= 60) {
-                    clearInterval(watchTimer);
-                    const r = ref(database, `users/${auth.currentUser.uid}/solde`);
-                    const s = await get(r);
-                    set(r, (s.val() || 0) + 10);
-                    alert("+10 FCFA !");
-                }
-            }, 1000);
-        };
-
-        window.closePlayer = () => {
-            clearInterval(watchTimer);
-            document.getElementById('main-player').src = "";
-            document.getElementById('player-screen').classList.remove('active');
-        };
-
-        document.getElementById('btn-retrait').onclick = () => {
-            window.open(`https://wa.me SIAPI de ${auth.currentUser.displayName}`, '_blank');
-        };
-
-        document.getElementById('btn-vpn').onclick = async () => {
-            if(window.show_8884441) window.show_8884441();
-            vpnTime += 720;
-            update(ref(database, `users/${auth.currentUser.uid}/vpn`), { time: vpnTime });
-        };
+        import { login, playMedia, closePlayer, regarderPubVPN, demanderRetrait, secretClick } from './script.js';
+        
+        document.getElementById('btn-login').onclick = login;
+        document.getElementById('btn-vpn').onclick = regarderPubVPN;
+        document.getElementById('btn-retrait').onclick = demanderRetrait;
+        document.getElementById('btn-close-player').onclick = closePlayer;
+        document.getElementById('logo-siapi').onclick = secretClick;
+        window.playMedia = playMedia;
     </script>
     <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>
 </body>
-  </html>
+</html>
 
