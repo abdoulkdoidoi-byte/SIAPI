@@ -3,220 +3,174 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SIAPI PLATINUM | 💎 HUB INTERNATIONAL</title>
-    <meta name="google-signin-client_id" content="1049903654521-krjp8eq9ko0v178qije3m3jubpi4hkg9.apps.googleusercontent.com">
+    <title>SIAPI PLATINUM | 💎 HUB</title>
+
+    <!-- SDKS FIREBASE COMPAT -->
+    <script src="https://www.gstatic.com"></script>
+    <script src="https://www.gstatic.com"></script>
+    <script src="https://www.gstatic.com"></script>
+
+    <!-- PUB MONETAG -->
     <script src="https://alwingulla.com" data-zone="8884441" async></script>
+
     <style>
         :root { --primary: #00ff88; --dark: #050505; --gold: #ffd700; --violet: #8a2be2; --glass: rgba(255,255,255,0.05); }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--dark); color: white; margin: 0; user-select: none; overflow-x: hidden; padding-bottom: 90px; }
-        #toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--primary), #00bd65); color: #000; padding: 12px 25px; border-radius: 50px; font-weight: 900; z-index: 100000; transition: 0.5s; width: 85%; text-align: center; }
-        #toast.show { top: 30px; }
-        .screen { position:fixed; top:0; left:0; width:100%; height:100%; background:var(--dark); z-index:40000; display:none; flex-direction:column; overflow-y: auto; align-items: center; padding-top: 20px; }
-        .active { display: flex !important; }
-        .header { padding: 20px; background: #000; border-bottom: 2px solid var(--violet); width: 100%; text-align: center; }
-        .wallet { font-size: 32px; font-weight: 900; color: var(--primary); }
-        .btn-main { background: linear-gradient(135deg, var(--violet), #4b0082); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: bold; width: 90%; margin: 10px 0; cursor: pointer; transition: 0.3s; }
-        .scroll-x { display: flex; overflow-x: auto; gap: 12px; padding: 15px; width: 100%; box-sizing: border-box; }
-        .media-card { min-width: 140px; background: #111; border-radius: 15px; overflow: hidden; border: 1px solid var(--glass); text-align: center; padding: 15px 5px; cursor:pointer; }
-        .btn-nav { background: var(--glass); color: white; border: 1px solid var(--violet); padding: 8px 15px; border-radius: 20px; font-size: 11px; white-space: nowrap; cursor: pointer; margin-right: 10px; }
-        .btn-nav.active { background: var(--violet); box-shadow: 0 0 10px var(--violet); }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--dark); color: white; margin: 0; padding-bottom: 100px; overflow-x: hidden; }
+        
+        /* HEADER AVEC BOUTON SIAPI */
+        .header-top { padding: 15px; background: #000; border-bottom: 2px solid var(--violet); text-align: center; display: flex; justify-content: center; }
+        .logo-siapi { border: 2px solid var(--primary); border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: var(--primary); box-shadow: 0 0 15px rgba(0,255,136,0.3); }
+
+        /* FOOTER AVEC LE SOLDE */
+        .footer-wallet { position: fixed; bottom: 0; width: 100%; background: #000; border-top: 2px solid var(--primary); padding: 10px; display: flex; flex-direction: column; align-items: center; z-index: 1000; }
+        .wallet-amount { font-size: 28px; font-weight: 900; color: var(--primary); }
+        .wallet-fcfa { font-size: 12px; color: var(--gold); font-weight: bold; margin-top: -5px; }
+
+        /* CONTENU CENTRAL */
+        .container { display: flex; flex-direction: column; align-items: center; padding: 15px; }
+        .card { background: var(--glass); margin: 10px 0; padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); width: 100%; box-sizing: border-box; text-align: center; }
+        .btn-main { background: linear-gradient(135deg, var(--violet), #4b0082); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: bold; width: 100%; cursor: pointer; margin: 10px 0; }
+        .btn-vpn { background: var(--primary); color: black; font-weight: 900; }
+
+        input { width: 100%; padding: 12px; margin: 8px 0; background: rgba(0,0,0,0.5); border: 1px solid var(--violet); border-radius: 8px; color: white; text-align: center; box-sizing: border-box; }
+        #auth-section { display: none; }
+        .show-auth { display: block !important; }
+
+        #toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: var(--primary); color: #000; padding: 10px 25px; border-radius: 50px; font-weight: bold; transition: 0.5s; z-index: 50000; }
+        #toast.show { top: 20px; }
     </style>
 </head>
 <body>
 
-    <div id="toast"><span id="toast-msg">Bienvenue !</span></div>
+    <div id="toast"><span id="toast-msg">Connexion...</span></div>
 
-    <div id="main-hub">
-        <header class="header">
-            <div id="logo-siapi" style="border: 2px solid var(--primary); border-radius: 50%; width: 50px; height: 50px; margin: 0 auto 10px auto; display:flex; align-items:center; justify-content:center; cursor:pointer;">
-                <span style="font-weight: 900; color: var(--primary); font-size: 12px;">SIAPI</span>
-            </div>
-            <div class="wallet" id="user-balance-fcf">Connectez-vous</div>
-            <div id="user-balance-usd" style="font-size: 12px; color: var(--gold);">0.00 $</div>
-        </header>
+    <!-- HAUT : BOUTON SIAPI -->
+    <header class="header-top">
+        <div class="logo-siapi">SIAPI</div>
+    </header>
 
-        <div style="background: rgba(0,255,136,0.05); margin: 15px; padding: 15px; border-radius: 15px; border: 1px solid var(--primary); text-align: center;">
-            <div id="vpn-timer-display" style="font-size: 28px; font-weight: 900; color: var(--gold);">00:00:00</div>
-            <button id="btn-vpn" class="btn-main" style="background: var(--primary); color: black; padding: 10px;">⚡ RECHARGER VPN (+12 MIN)</button>
+    <div class="container">
+        <!-- VPN & PUB -->
+        <div class="card" style="border: 1px solid var(--primary);">
+            <div id="vpn-timer-display" style="font-size: 38px; font-weight: 900; color: var(--gold); margin-bottom: 5px;">00:00:00</div>
+            <button onclick="rechargeVPN()" class="btn-main btn-vpn">RECHARGER VPN (PUB) 📺</button>
+            <p style="font-size: 10px; color: #888; margin-top: 5px;">+10F par publicité visionnée</p>
         </div>
 
-        <div class="scroll-x" style="border-bottom: 1px solid var(--violet); margin-bottom: 10px; padding: 10px;">
-            <button class="btn-nav active" onclick="window.filterMedia('all')">Tout</button>
-            <button class="btn-nav" onclick="window.filterMedia('cours')">📚 Cours</button>
-            <button class="btn-nav" onclick="window.filterMedia('film')">🎬 Films</button>
-            <button class="btn-nav" onclick="window.filterMedia('live')">📡 Live TV</button>
+        <!-- PARRAINAGE -->
+        <div class="card">
+            <small style="color: var(--gold);">LIEN DE PARRAINAGE (+25F)</small>
+            <input type="text" id="ref-link" readonly value="Connectez-vous pour voir le lien">
+            <button onclick="copyRef()" class="btn-main" style="background: var(--gold); color: black; height: 45px; padding: 0;">COPIER LE LIEN</button>
         </div>
 
-        <div id="media-container" class="scroll-x">
-            <div class="media-card item-cours" onclick="window.checkAuthAndPlay('URL_MATHS', 'MATHS', 'court')">📐<br><small>MATHS (+10F)</small></div>
-            <div class="media-card item-film" onclick="window.checkAuthAndPlay('URL_FILM', 'FILM ACTION', 'film')">🎞️<br><small>FILM (+25F)</small></div>
-            <div class="media-card item-live" onclick="window.checkAuthAndPlay('URL_TV', 'RTB LIVE', 'film')">📺<br><small>RTB LIVE (+25F)</small></div>
-        </div>
+        <!-- LOGIN / SAVE -->
+        <button id="btn-toggle-login" onclick="toggleAuth()" class="btn-main" style="background: transparent; border: 1px solid var(--violet); color: var(--violet);">💾 SAUVEGARDER / SE CONNECTER</button>
 
-        <div style="display: flex; gap: 10px; padding: 15px;">
-            <button id="btn-retrait" class="btn-main" style="flex:1; background: var(--gold); color: black;">💸 RETRAIT</button>
-            <button id="btn-invite" class="btn-main" style="flex:1; background: transparent; border: 1px solid var(--primary); color: var(--primary);">📲 INVITER (+25F)</button>
-        </div>
-
-        <div id="admin-section" style="display:none; margin: 15px; padding: 15px; background: rgba(255,0,0,0.1); border: 2px dashed red; border-radius: 15px;">
-            <h3 style="color:red; font-size:14px; margin:0;">🛠️ LOGICIEL MAÎTRE</h3>
-            <div id="admin-stats">Chargement...</div>
-            <div id="users-list" style="font-size:10px; margin-top:10px; max-height:150px; overflow-y:auto;"></div>
+        <div id="auth-section" class="card">
+            <h4 style="margin: 0 0 10px 0; color: var(--violet);">VOTRE COMPTE</h4>
+            <input type="email" id="reg-email" placeholder="Email">
+            <input type="password" id="reg-pass" placeholder="Mot de passe">
+            <button class="btn-main" onclick="handleAuth()">VALIDER L'ACCÈS</button>
         </div>
     </div>
 
-    <div id="auth-screen" class="screen" style="justify-content: center;">
-        <h2 style="text-align:center;">SIAPI PLATINUM 🔐</h2>
-        <button class="btn-main" id="btn-login">S'IDENTIFIER AVEC GOOGLE</button>
-        <button onclick="document.getElementById('auth-screen').classList.remove('active')" style="background:none; border:none; color:gray; margin-top:20px;">Plus tard</button>
-    </div>
+    <!-- BAS : LE SOLDE -->
+    <footer class="footer-wallet">
+        <div class="wallet-amount" id="user-balance">0.00 $</div>
+        <div class="wallet-fcfa" id="user-balance-fcf">0 FCFA</div>
+    </footer>
 
-    <div id="player-screen" class="screen" style="background:#000;">
-        <div class="header"><span id="player-title">LECTURE</span> <button id="btn-close-player" style="float:right; color:red; border:none; background:none; font-size:25px;">✕</button></div>
-        <iframe id="main-player" width="100%" height="250" src="" frameborder="0" allowfullscreen></iframe>
-        <div id="reward-timer" style="color:var(--primary); text-align:center; margin-top:20px; font-weight:bold;">Prêt... ⏳</div>
-    </div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com";
-        import { getDatabase, ref, get, set, onValue, update } from "https://www.gstatic.com";
-
+    <script>
+        // CONFIGURATION FIREBASE (REMPLACER PAR TES VRAIES INFOS)
         const firebaseConfig = {
-            apiKey: "AIzaSyCop4EVQ0Nfpwq0aRtgbQemxMVD626vP00",
-            authDomain: "siapi-74d6d.firebaseapp.com",
-            databaseURL: "https://siapi-74d6d-default-rtdb.firebaseio.com",
-            projectId: "siapi-74d6d",
-            storageBucket: "siapi-74d6d.firebasestorage.app",
-            messagingSenderId: "1049903654521",
-            appId: "1:1049903654521:web:a267a58ba793e8d09916a8"
+            apiKey: "VOTRE_API_KEY",
+            authDomain: "VOTRE_PROJET.firebaseapp.com",
+            databaseURL: "https://VOTRE_PROJET-default-rtdb.firebaseio.com",
+            projectId: "VOTRE_PROJET",
+            storageBucket: "VOTRE_PROJET.appspot.com",
+            messagingSenderId: "VOTRE_SENDER_ID",
+            appId: "VOTRE_APP_ID"
         };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const database = getDatabase(app);
-        const provider = new GoogleAuthProvider();
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.database();
+        let currentUser = null;
 
-        let vpnTime = 0, watchTimer = null, clickCount = 0, lastClick = 0;
-        const emailMaître = "abdoulk.diodoi@gmail.com";
+        // AUTH & SYNC
+        async function handleAuth() {
+            const email = document.getElementById('reg-email').value;
+            const pass = document.getElementById('reg-pass').value;
+            const urlParams = new URLSearchParams(window.location.search);
+            const refBy = urlParams.get('ref');
 
-        // --- EXPOSITION DES FONCTIONS AU NIVEAU GLOBAL ---
-        window.filterMedia = (category) => {
-            const cards = document.querySelectorAll('.media-card');
-            cards.forEach(card => {
-                card.style.display = (category === 'all' || card.classList.contains('item-' + category)) ? 'block' : 'none';
+            if(!email || !pass) return showToast("Remplissez les champs");
+
+            try {
+                const res = await auth.signInWithEmailAndPassword(email, pass);
+                loadUserData(res.user.uid);
+            } catch (e) {
+                auth.createUserWithEmailAndPassword(email, pass).then(res => {
+                    const uid = res.user.uid;
+                    if(refBy) db.ref('users/' + refBy + '/balance').transaction(b => (b || 0) + 0.04);
+                    db.ref('users/' + uid).set({ balance: 0, vpnTime: 0, email: email });
+                    loadUserData(uid);
+                }).catch(err => showToast(err.message));
+            }
+        }
+
+        function loadUserData(uid) {
+            db.ref('users/' + uid).on('value', (snap) => {
+                const data = snap.val();
+                if(!data) return;
+                currentUser = { uid, ...data };
+                
+                document.getElementById('user-balance').innerText = data.balance.toFixed(2) + " $";
+                document.getElementById('user-balance-fcf').innerText = Math.floor(data.balance * 600) + " FCFA";
+                document.getElementById('ref-link').value = window.location.origin + "?ref=" + uid;
+                
+                document.getElementById('auth-section').classList.remove('show-auth');
+                document.getElementById('btn-toggle-login').innerText = "✅ CONNECTÉ (" + data.email.split('@')[0] + ")";
+                
+                if(data.vpnTime > 0) startTimer(data.vpnTime);
             });
-            const buttons = document.querySelectorAll('.btn-nav');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-        };
+        }
 
-        window.checkAuthAndPlay = (url, title, type) => {
-            if (!auth.currentUser) {
-                document.getElementById('auth-screen').classList.add('active');
-            } else {
-                window.playMedia(url, title, type);
+        // VPN & PUB
+        function rechargeVPN() {
+            if(!currentUser) { 
+                showToast("Connectez-vous pour gagner des F !");
+                toggleAuth();
+                return;
             }
-        };
-
-        window.playMedia = (url, title, type) => {
-            if(vpnTime <= 0) return showToast("Activez le VPN SIAPI ! 🛡️");
-            document.getElementById('main-player').src = url;
-            document.getElementById('player-screen').classList.add('active');
-            document.getElementById('player-title').innerText = title;
-            let sec = 0;
-            if(watchTimer) clearInterval(watchTimer);
-            watchTimer = setInterval(async () => {
-                if(!document.hidden) {
-                    sec++;
-                    document.getElementById('reward-timer').innerText = `Gain dans ${60-sec}s...`;
-                    if(sec >= 60) {
-                        clearInterval(watchTimer);
-                        let gain = (type === 'film') ? 25 : 10;
-                        const r = ref(database, `users/${auth.currentUser.uid}/solde`);
-                        const s = await get(r);
-                        await set(r, (s.val() || 0) + gain);
-                        showToast(`+${gain} FCFA ! 💰`);
-                        document.getElementById('reward-timer').innerText = "Gain validé ! ✅";
-                    }
-                }
-            }, 1000);
-        };
-
-        // --- ATTACHE DES EVENEMENTS DOM ---
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('btn-login').onclick = async () => {
-                try {
-                    await signInWithPopup(auth, provider);
-                    document.getElementById('auth-screen').classList.remove('active');
-                    showToast("Connecté ! ✅");
-                } catch (e) { showToast("Erreur Google Auth"); }
-            };
-
-            document.getElementById('btn-vpn').onclick = async () => {
-                if (!auth.currentUser) return document.getElementById('auth-screen').classList.add('active');
-                if(window.show_8884441) window.show_8884441();
-                vpnTime += 720;
-                await update(ref(database, `users/${auth.currentUser.uid}/vpn`), { time: vpnTime });
-                showToast("VPN : +12 MIN ⚡");
-            };
-
-            document.getElementById('btn-retrait').onclick = () => {
-                if (!auth.currentUser) return document.getElementById('auth-screen').classList.add('active');
-                const s = document.getElementById('user-balance-fcf').innerText;
-                window.open(`https://wa.me SIAPI de ${auth.currentUser.displayName} : ${s}`, '_blank');
-            };
-
-            document.getElementById('btn-invite').onclick = () => {
-                if (!auth.currentUser) return document.getElementById('auth-screen').classList.add('active');
-                const l = `https://siapi-74d6d.firebaseapp.com{auth.currentUser.uid}`;
-                window.open(`https://wa.me 1000F par jour sur SIAPI ! Mon lien : ${l}`, '_blank');
-            };
-
-            document.getElementById('logo-siapi').onclick = () => {
-                if (!auth.currentUser || auth.currentUser.email !== emailMaître) return;
-                const now = Date.now();
-                if (now - lastClick > 2000) clickCount = 0;
-                clickCount++; lastClick = now;
-                if (clickCount === 5) {
-                    const p = prompt("CODE MASTER :");
-                    if (p === "2026") document.getElementById('admin-section').style.display = 'block';
-                }
-            };
-
-            document.getElementById('btn-close-player').onclick = () => {
-                clearInterval(watchTimer);
-                document.getElementById('main-player').src = "";
-                document.getElementById('player-screen').classList.remove('active');
-            };
-        });
-
-        // --- SYNCHRO TEMPS REEL ---
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                onValue(ref(database, 'users/' + user.uid), (s) => {
-                    const d = s.val() || {solde:0, vpn:{time:0}};
-                    const solde = d.solde || 0;
-                    document.getElementById('user-balance-fcf').innerText = solde + " FCFA";
-                    document.getElementById('user-balance-usd').innerText = (solde / 600).toFixed(2) + " $";
-                    vpnTime = d.vpn?.time || 0;
-                    updateTimerUI();
+            if(typeof show_8884441 === 'function') {
+                show_8884441().then(() => {
+                    db.ref('users/' + currentUser.uid).update({ 
+                        vpnTime: 7200, 
+                        balance: (currentUser.balance || 0) + 0.016 // Environ 10F
+                    });
+                    showToast("VPN +2H & GAIN +10F ✅");
                 });
+            } else {
+                showToast("Publicité en cours...");
             }
-        });
-
-        function updateTimerUI() {
-            const h = Math.floor(vpnTime/3600), m = Math.floor((vpnTime%3600)/60), s = vpnTime%60;
-            document.getElementById('vpn-timer-display').innerText = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
         }
 
-        function showToast(m) {
-            const t = document.getElementById('toast');
-            document.getElementById('toast-msg').innerText = m;
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 3000);
+        function startTimer(sec) {
+            const disp = document.getElementById('vpn-timer-display');
+            const interval = setInterval(() => {
+                if(sec <= 0) { clearInterval(interval); return; }
+                sec--;
+                let h=Math.floor(sec/3600), m=Math.floor((sec%3600)/60), s=sec%60;
+                disp.innerText = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+                if(sec % 60 === 0) db.ref('users/' + currentUser.uid).update({ vpnTime: sec });
+            }, 1000);
         }
+
+        function toggleAuth() { document.getElementById('auth-section').classList.toggle('show-auth'); }
+        function showToast(m) { const t=document.getElementById('toast'); document.getElementById('toast-msg').innerText=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
+        function copyRef() { const l=document.getElementById('ref-link'); l.select(); navigator.clipboard.writeText(l.value); showToast("Lien copié !"); }
     </script>
 </body>
 </html>
-
