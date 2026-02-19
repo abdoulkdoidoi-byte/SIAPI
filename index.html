@@ -3,9 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SIAPI PLATINUM | 💎 HUB AFRICAIN</title>
+    <title>SIAPI PLATINUM | 💎 HUB INTERNATIONAL</title>
     <meta name="google-signin-client_id" content="1049903654521-krjp8eq9ko0v178qije3m3jubpi4hkg9.apps.googleusercontent.com">
-    <link rel="manifest" href="manifest.json">
     <script src="https://alwingulla.com" data-zone="8884441" async></script>
     <style>
         :root { --primary: #00ff88; --dark: #050505; --gold: #ffd700; --violet: #8a2be2; --glass: rgba(255,255,255,0.05); }
@@ -18,80 +17,206 @@
         .wallet { font-size: 32px; font-weight: 900; color: var(--primary); }
         .btn-main { background: linear-gradient(135deg, var(--violet), #4b0082); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: bold; width: 90%; margin: 10px 0; cursor: pointer; transition: 0.3s; }
         .scroll-x { display: flex; overflow-x: auto; gap: 12px; padding: 15px; width: 100%; box-sizing: border-box; }
-        .media-card { min-width: 140px; background: #111; border-radius: 15px; overflow: hidden; border: 1px solid var(--glass); text-align: center; padding-bottom: 8px; cursor:pointer; }
+        .media-card { min-width: 140px; background: #111; border-radius: 15px; overflow: hidden; border: 1px solid var(--glass); text-align: center; padding: 15px 5px; cursor:pointer; }
+        .btn-nav { background: var(--glass); color: white; border: 1px solid var(--violet); padding: 8px 15px; border-radius: 20px; font-size: 11px; white-space: nowrap; cursor: pointer; margin-right: 10px; }
+        .btn-nav.active { background: var(--violet); box-shadow: 0 0 10px var(--violet); }
     </style>
 </head>
 <body>
-    <div id="toast"><span id="toast-msg">Connexion...</span></div>
 
-    <!-- ECRAN AUTH -->
-    <div id="auth-screen" class="screen active" style="justify-content: center;">
-        <div id="logo-siapi" style="border: 3px solid var(--primary); border-radius: 50%; width: 80px; height: 80px; display:flex; align-items:center; justify-content:center; cursor:pointer;">
-            <span style="font-weight: 900; color: var(--primary);">SIAPI</span>
-        </div>
-        <h2 style="text-align:center;">SIAPI PLATINUM 💎<br><small style="color:var(--gold); font-size:10px;">Le Hub Africain : Apprenez & Encaissez</small></h2>
-        <button class="btn-main" id="btn-login">ACCÉDER AU HUB INTERNATIONAL</button>
-        <p style="font-size:10px;"><a href="privacy.html" style="color:var(--gold);">Politique de Confidentialité</a></p>
-    </div>
+    <div id="toast"><span id="toast-msg">Bienvenue !</span></div>
 
-    <!-- HUB PRINCIPAL -->
-    <div id="main-hub" style="display:none;">
+    <div id="main-hub">
         <header class="header">
-            <div class="wallet" id="user-balance-fcf">0 FCFA</div>
+            <div id="logo-siapi" style="border: 2px solid var(--primary); border-radius: 50%; width: 50px; height: 50px; margin: 0 auto 10px auto; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+                <span style="font-weight: 900; color: var(--primary); font-size: 12px;">SIAPI</span>
+            </div>
+            <div class="wallet" id="user-balance-fcf">Connectez-vous</div>
+            <div id="user-balance-usd" style="font-size: 12px; color: var(--gold);">0.00 $</div>
         </header>
+
         <div style="background: rgba(0,255,136,0.05); margin: 15px; padding: 15px; border-radius: 15px; border: 1px solid var(--primary); text-align: center;">
             <div id="vpn-timer-display" style="font-size: 28px; font-weight: 900; color: var(--gold);">00:00:00</div>
-            <button id="btn-vpn" class="btn-main" style="background: var(--primary); color: black; padding: 8px;">RECHARGER VPN (+12 MIN) 📺</button>
+            <button id="btn-vpn" class="btn-main" style="background: var(--primary); color: black; padding: 10px;">⚡ RECHARGER VPN (+12 MIN)</button>
         </div>
-        <div class="scroll-x">
-            <div class="media-card" onclick="window.playMedia('https://www.youtube.com', 'MATHS')">📐<br><small>MATHS (+10F)</small></div>
-            <div class="media-card" onclick="window.playMedia('https://www.youtube.com', 'PHILO')">🤔<br><small>PHILO (+10F)</small></div>
+
+        <div class="scroll-x" style="border-bottom: 1px solid var(--violet); margin-bottom: 10px; padding: 10px;">
+            <button class="btn-nav active" onclick="window.filterMedia('all')">Tout</button>
+            <button class="btn-nav" onclick="window.filterMedia('cours')">📚 Cours</button>
+            <button class="btn-nav" onclick="window.filterMedia('film')">🎬 Films</button>
+            <button class="btn-nav" onclick="window.filterMedia('live')">📡 Live TV</button>
         </div>
-        <button id="btn-retrait" class="btn-main" style="background: var(--gold); color: black; margin: 15px auto; display:block;">RETRAIT MOBILE MONEY 📲</button>
+
+        <div id="media-container" class="scroll-x">
+            <div class="media-card item-cours" onclick="window.checkAuthAndPlay('URL_MATHS', 'MATHS', 'court')">📐<br><small>MATHS (+10F)</small></div>
+            <div class="media-card item-film" onclick="window.checkAuthAndPlay('URL_FILM', 'FILM ACTION', 'film')">🎞️<br><small>FILM (+25F)</small></div>
+            <div class="media-card item-live" onclick="window.checkAuthAndPlay('URL_TV', 'RTB LIVE', 'film')">📺<br><small>RTB LIVE (+25F)</small></div>
+        </div>
+
+        <div style="display: flex; gap: 10px; padding: 15px;">
+            <button id="btn-retrait" class="btn-main" style="flex:1; background: var(--gold); color: black;">💸 RETRAIT</button>
+            <button id="btn-invite" class="btn-main" style="flex:1; background: transparent; border: 1px solid var(--primary); color: var(--primary);">📲 INVITER (+25F)</button>
+        </div>
+
+        <div id="admin-section" style="display:none; margin: 15px; padding: 15px; background: rgba(255,0,0,0.1); border: 2px dashed red; border-radius: 15px;">
+            <h3 style="color:red; font-size:14px; margin:0;">🛠️ LOGICIEL MAÎTRE</h3>
+            <div id="admin-stats">Chargement...</div>
+            <div id="users-list" style="font-size:10px; margin-top:10px; max-height:150px; overflow-y:auto;"></div>
+        </div>
     </div>
-    <!-- SECTION LIVE TV & ÉVÉNEMENTS -->
-<div style="padding-left: 15px; font-weight: bold; color: var(--primary); font-size: 13px; margin-top: 20px;">📡 TV EN DIRECT & ÉVÉNEMENTS</div>
-<div class="scroll-x">
-    <div class="media-card" onclick="window.playMedia('Lien_Flux_TV_1', 'RTB LIVE')">🔴<br><small>RTB DIRECT</small></div>
-    <div class="media-card" onclick="window.playMedia('Lien_Flux_TV_2', 'CANAL+ SP')">⚽<br><small>MATCH LIVE</small></div>
-    <div class="media-card" onclick="showGallery()">📸<br><small>ÉVÉNEMENTS</small></div>
-</div>
 
-<!-- SECTION FILMS & SÉRIES (+10F) -->
-<div style="padding-left: 15px; font-weight: bold; color: var(--gold); font-size: 13px; margin-top: 15px;">🎬 FILMS & SÉRIES (+10F)</div>
-<div class="scroll-x">
-    <div class="media-card" onclick="window.playMedia('URL_FILM_1', 'ACTION 2026')">🎞️<br><small>FILM ACTION</small></div>
-    <div class="media-card" onclick="window.playMedia('URL_FILM_2', 'COMÉDIE')">🎭<br><small>SÉRIE AFRICAINE</small></div>
-    <div class="media-card" onclick="window.playMedia('URL_FILM_3', 'DOCU')">🌍<br><small>DOCUMENTAIRE</small></div>
-</div>
-
-<!-- MODAL GALERIE IMAGES (Caché par défaut) -->
-<div id="gallery-screen" class="screen" style="background:rgba(0,0,0,0.9);">
-    <div class="header">GALERIE PHOTOS <button onclick="document.getElementById('gallery-screen').classList.remove('active')" style="float:right; color:red; border:none; background:none; font-size:25px;">✕</button></div>
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; padding:15px;">
-        <img src="IMAGE_URL_1" style="width:100%; border-radius:10px;">
-        <img src="IMAGE_URL_2" style="width:100%; border-radius:10px;">
+    <div id="auth-screen" class="screen" style="justify-content: center;">
+        <h2 style="text-align:center;">SIAPI PLATINUM 🔐</h2>
+        <button class="btn-main" id="btn-login">S'IDENTIFIER AVEC GOOGLE</button>
+        <button onclick="document.getElementById('auth-screen').classList.remove('active')" style="background:none; border:none; color:gray; margin-top:20px;">Plus tard</button>
     </div>
-</div>
 
-    <!-- PLAYER -->
     <div id="player-screen" class="screen" style="background:#000;">
-        <div class="header"><span id="player-title">COURS</span> <button id="btn-close-player" style="float:right; color:red; border:none; background:none; font-size:25px;">✕</button></div>
+        <div class="header"><span id="player-title">LECTURE</span> <button id="btn-close-player" style="float:right; color:red; border:none; background:none; font-size:25px;">✕</button></div>
         <iframe id="main-player" width="100%" height="250" src="" frameborder="0" allowfullscreen></iframe>
-        <div id="reward-timer" style="color:var(--primary); text-align:center; margin-top:20px; font-weight:bold;">Gain dans 60s... ⏳</div>
+        <div id="reward-timer" style="color:var(--primary); text-align:center; margin-top:20px; font-weight:bold;">Prêt... ⏳</div>
     </div>
 
     <script type="module">
-        import { login, playMedia, closePlayer, regarderPubVPN, demanderRetrait, secretClick } from './script.js';
-        
-        document.getElementById('btn-login').onclick = login;
-        document.getElementById('btn-vpn').onclick = regarderPubVPN;
-        document.getElementById('btn-retrait').onclick = demanderRetrait;
-        document.getElementById('btn-close-player').onclick = closePlayer;
-        document.getElementById('logo-siapi').onclick = secretClick;
-        window.playMedia = playMedia;
+        import { initializeApp } from "https://www.gstatic.com";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com";
+        import { getDatabase, ref, get, set, onValue, update } from "https://www.gstatic.com";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCop4EVQ0Nfpwq0aRtgbQemxMVD626vP00",
+            authDomain: "siapi-74d6d.firebaseapp.com",
+            databaseURL: "https://siapi-74d6d-default-rtdb.firebaseio.com",
+            projectId: "siapi-74d6d",
+            storageBucket: "siapi-74d6d.firebasestorage.app",
+            messagingSenderId: "1049903654521",
+            appId: "1:1049903654521:web:a267a58ba793e8d09916a8"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+        const provider = new GoogleAuthProvider();
+
+        let vpnTime = 0, watchTimer = null, clickCount = 0, lastClick = 0;
+        const emailMaître = "abdoulk.diodoi@gmail.com";
+
+        // --- EXPOSITION DES FONCTIONS AU NIVEAU GLOBAL ---
+        window.filterMedia = (category) => {
+            const cards = document.querySelectorAll('.media-card');
+            cards.forEach(card => {
+                card.style.display = (category === 'all' || card.classList.contains('item-' + category)) ? 'block' : 'none';
+            });
+            const buttons = document.querySelectorAll('.btn-nav');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        };
+
+        window.checkAuthAndPlay = (url, title, type) => {
+            if (!auth.currentUser) {
+                document.getElementById('auth-screen').classList.add('active');
+            } else {
+                window.playMedia(url, title, type);
+            }
+        };
+
+        window.playMedia = (url, title, type) => {
+            if(vpnTime <= 0) return showToast("Activez le VPN SIAPI ! 🛡️");
+            document.getElementById('main-player').src = url;
+            document.getElementById('player-screen').classList.add('active');
+            document.getElementById('player-title').innerText = title;
+            let sec = 0;
+            if(watchTimer) clearInterval(watchTimer);
+            watchTimer = setInterval(async () => {
+                if(!document.hidden) {
+                    sec++;
+                    document.getElementById('reward-timer').innerText = `Gain dans ${60-sec}s...`;
+                    if(sec >= 60) {
+                        clearInterval(watchTimer);
+                        let gain = (type === 'film') ? 25 : 10;
+                        const r = ref(database, `users/${auth.currentUser.uid}/solde`);
+                        const s = await get(r);
+                        await set(r, (s.val() || 0) + gain);
+                        showToast(`+${gain} FCFA ! 💰`);
+                        document.getElementById('reward-timer').innerText = "Gain validé ! ✅";
+                    }
+                }
+            }, 1000);
+        };
+
+        // --- ATTACHE DES EVENEMENTS DOM ---
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('btn-login').onclick = async () => {
+                try {
+                    await signInWithPopup(auth, provider);
+                    document.getElementById('auth-screen').classList.remove('active');
+                    showToast("Connecté ! ✅");
+                } catch (e) { showToast("Erreur Google Auth"); }
+            };
+
+            document.getElementById('btn-vpn').onclick = async () => {
+                if (!auth.currentUser) return document.getElementById('auth-screen').classList.add('active');
+                if(window.show_8884441) window.show_8884441();
+                vpnTime += 720;
+                await update(ref(database, `users/${auth.currentUser.uid}/vpn`), { time: vpnTime });
+                showToast("VPN : +12 MIN ⚡");
+            };
+
+            document.getElementById('btn-retrait').onclick = () => {
+                if (!auth.currentUser) return document.getElementById('auth-screen').classList.add('active');
+                const s = document.getElementById('user-balance-fcf').innerText;
+                window.open(`https://wa.me SIAPI de ${auth.currentUser.displayName} : ${s}`, '_blank');
+            };
+
+            document.getElementById('btn-invite').onclick = () => {
+                if (!auth.currentUser) return document.getElementById('auth-screen').classList.add('active');
+                const l = `https://siapi-74d6d.firebaseapp.com{auth.currentUser.uid}`;
+                window.open(`https://wa.me 1000F par jour sur SIAPI ! Mon lien : ${l}`, '_blank');
+            };
+
+            document.getElementById('logo-siapi').onclick = () => {
+                if (!auth.currentUser || auth.currentUser.email !== emailMaître) return;
+                const now = Date.now();
+                if (now - lastClick > 2000) clickCount = 0;
+                clickCount++; lastClick = now;
+                if (clickCount === 5) {
+                    const p = prompt("CODE MASTER :");
+                    if (p === "2026") document.getElementById('admin-section').style.display = 'block';
+                }
+            };
+
+            document.getElementById('btn-close-player').onclick = () => {
+                clearInterval(watchTimer);
+                document.getElementById('main-player').src = "";
+                document.getElementById('player-screen').classList.remove('active');
+            };
+        });
+
+        // --- SYNCHRO TEMPS REEL ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                onValue(ref(database, 'users/' + user.uid), (s) => {
+                    const d = s.val() || {solde:0, vpn:{time:0}};
+                    const solde = d.solde || 0;
+                    document.getElementById('user-balance-fcf').innerText = solde + " FCFA";
+                    document.getElementById('user-balance-usd').innerText = (solde / 600).toFixed(2) + " $";
+                    vpnTime = d.vpn?.time || 0;
+                    updateTimerUI();
+                });
+            }
+        });
+
+        function updateTimerUI() {
+            const h = Math.floor(vpnTime/3600), m = Math.floor((vpnTime%3600)/60), s = vpnTime%60;
+            document.getElementById('vpn-timer-display').innerText = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+        }
+
+        function showToast(m) {
+            const t = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = m;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
     </script>
-    <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>
 </body>
 </html>
 
