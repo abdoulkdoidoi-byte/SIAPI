@@ -195,6 +195,17 @@
         document.getElementById('logo-siapi').onclick = window.secretClick;
         document.getElementById('card-maths').onclick = () => window.playMedia('https://www.youtube.com', 'Maths');
         document.getElementById('card-philo').onclick = () => window.playMedia('https://www.youtube.com', 'Philo');
+        
+  </script>
+    <!-- ... le reste de ton code ... -->
+
+    <!-- SCRIPT D'ACTIVATION DU SERVICE WORKER (VPN & INSTALLATION) -->
+    <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log("Service Worker SIAPI : Activé ✅"))
+        .catch((err) => console.log("Erreur SW : ", err));
+    }
     </script>
 </body>
 </html>
