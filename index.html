@@ -82,6 +82,35 @@
     </footer>
 
     <script>
+        <script>
+    // 1. PLACE CECI EN PREMIER (Activation de l'installation mobile)
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('SIAPI PWA: Activée !'))
+                .catch(err => console.log('Erreur PWA:', err));
+        });
+    }
+
+    // 2. TES IDENTIFIANTS FIREBASE (Juste après)
+    const firebaseConfig = {
+        apiKey: "AIzaSy...", 
+        authDomain: "siapi-platinum.firebaseapp.com",
+        databaseURL: "https://siapi-platinum-default-rtdb.firebaseio.com",
+        projectId: "siapi-platinum",
+        storageBucket: "siapi-platinum.appspot.com",
+        messagingSenderId: "123456789",
+        appId: "1:123456789:web:abc123"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    // 3. LE RESTE DE TA LOGIQUE (handleAuth, rechargeVPN, etc.)
+    // ... (le code que je t'ai donné précédemment)
+</script>
+    
         // CONFIGURATION FIREBASE (REMPLACER PAR TES VRAIES INFOS)
         const firebaseConfig = {
             apiKey: "VOTRE_API_KEY",
