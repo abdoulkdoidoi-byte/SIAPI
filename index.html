@@ -49,6 +49,30 @@
         </div>
         <button id="btn-retrait" class="btn-main" style="background: var(--gold); color: black; margin: 15px auto; display:block;">RETRAIT MOBILE MONEY 📲</button>
     </div>
+    <!-- SECTION LIVE TV & ÉVÉNEMENTS -->
+<div style="padding-left: 15px; font-weight: bold; color: var(--primary); font-size: 13px; margin-top: 20px;">📡 TV EN DIRECT & ÉVÉNEMENTS</div>
+<div class="scroll-x">
+    <div class="media-card" onclick="window.playMedia('Lien_Flux_TV_1', 'RTB LIVE')">🔴<br><small>RTB DIRECT</small></div>
+    <div class="media-card" onclick="window.playMedia('Lien_Flux_TV_2', 'CANAL+ SP')">⚽<br><small>MATCH LIVE</small></div>
+    <div class="media-card" onclick="showGallery()">📸<br><small>ÉVÉNEMENTS</small></div>
+</div>
+
+<!-- SECTION FILMS & SÉRIES (+10F) -->
+<div style="padding-left: 15px; font-weight: bold; color: var(--gold); font-size: 13px; margin-top: 15px;">🎬 FILMS & SÉRIES (+10F)</div>
+<div class="scroll-x">
+    <div class="media-card" onclick="window.playMedia('URL_FILM_1', 'ACTION 2026')">🎞️<br><small>FILM ACTION</small></div>
+    <div class="media-card" onclick="window.playMedia('URL_FILM_2', 'COMÉDIE')">🎭<br><small>SÉRIE AFRICAINE</small></div>
+    <div class="media-card" onclick="window.playMedia('URL_FILM_3', 'DOCU')">🌍<br><small>DOCUMENTAIRE</small></div>
+</div>
+
+<!-- MODAL GALERIE IMAGES (Caché par défaut) -->
+<div id="gallery-screen" class="screen" style="background:rgba(0,0,0,0.9);">
+    <div class="header">GALERIE PHOTOS <button onclick="document.getElementById('gallery-screen').classList.remove('active')" style="float:right; color:red; border:none; background:none; font-size:25px;">✕</button></div>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; padding:15px;">
+        <img src="IMAGE_URL_1" style="width:100%; border-radius:10px;">
+        <img src="IMAGE_URL_2" style="width:100%; border-radius:10px;">
+    </div>
+</div>
 
     <!-- PLAYER -->
     <div id="player-screen" class="screen" style="background:#000;">
